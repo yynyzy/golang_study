@@ -3,6 +3,7 @@ package main
 import "fmt"  //fmt包中提供格式化，输出，输入的函数
 
 func main() {
+	// 演示转义字符
 	fmt.Println("hello\tWorld1")
 	fmt.Println("hello\nWorld2")
 	fmt.Println("D:\\GoProjcet\\src\\go_code\\go_study\\study_01\\main")
