@@ -29,9 +29,12 @@ func main() {
 
 //该案例演示golang如何一次性声明多个变量
 
+//定义全局变量
 var n1 = 100
 var n2 = 200
 var name = "jack"
+
+//上面声明的方式也可以改为一次性声明全部
 var (
 	n3 = 300
 	n4 = 900
@@ -50,5 +53,6 @@ func main() {
 	// n1, name , n3 := 100,"tom~", 888
 	// fmt.Println( "n1=",n1,"name=", name,"n3=", n3)
 
+	//输出全局变量
 	fmt.Println( "n1=",n1,"n2=",n2,"name=", name,"n3=", n3,"n4=",n4)
 }
