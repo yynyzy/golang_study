@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	_ "unsafe"
 )
 
@@ -25,5 +26,20 @@ func main() {
 	fmt.Printf("str 的数据类型是%T ,值是%q\n", str, str)
 
 	str = fmt.Sprintf("%c", mychar)
+	fmt.Printf("str 的数据类型是%T ,值是%q\n", str, str)
+
+	//第二种方式 strcon 函数
+	var num3 int = 66
+	var num4 float64 = 0.667
+	var b2 bool = true
+
+	str = strconv.FormatInt(int64(num3), 10)
+	fmt.Printf("str 的数据类型是%T ,值是%q\n", str, str)
+
+	// 'f':格式    10：小数点保留10位   64；小数是64位
+	str = strconv.FormatFloat(num4, 'f', 10, 64)
+	fmt.Printf("str 的数据类型是%T ,值是%q\n", str, str)
+
+	str = strconv.FormatBool(b2)
 	fmt.Printf("str 的数据类型是%T ,值是%q\n", str, str)
 }
