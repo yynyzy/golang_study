@@ -19,5 +19,7 @@ func main() {
 
 	// 内存图
 	// ptr ——> 0x0011(地址为:0x00333) ——> 128(地址为: 0x0011)
-
+	ns := 1234.12
+	var ptrs *float64 = &ns
+	fmt.Printf("ns 指向的值是=%v\n", *ptrs)
 }
