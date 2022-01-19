@@ -18,13 +18,26 @@ func main() {
 
 	//for循环的第三种写法,这种写法通常会配合break使用
 	k := 1
-	for {
+	for { //这里等价 for ;;{
 		if k <= 10 {
 			fmt.Println("ok~", k)
 		} else {
 			break //跳出循环
 		}
 		k++
+	}
+
+	//字符串遍历方式一
+	var str string = "握手,yzy"
+	for i := 0; i < len(str); i++ {
+		fmt.Printf("%c\n", str[i])
+	}
+
+	//字符串遍历方式二——for range
+	//Unicode遍历
+	str = "abc~12握手"
+	for index, val := range str {
+		fmt.Printf("index=%d,val=%c \n", index, val)
 	}
 
 }
