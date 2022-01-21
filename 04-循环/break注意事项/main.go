@@ -30,4 +30,16 @@ func main() {
 		break的注意事项
 		1）break语句出现在多层嵌套的语句块块时，可以通过标签指名要终止的是哪一层语句块
 	*/
+
+label2:
+	for i := 0; i < 4; i++ {
+		// label1: //设置一个标签
+		for j := 0; j < 4; j++ {
+			if j == 2 {
+				// break label1
+				break label2 //j=0 j=1
+			}
+			fmt.Println("j=", j)
+		}
+	}
 }
