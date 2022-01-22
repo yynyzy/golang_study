@@ -15,6 +15,11 @@ func main() {
 	if n > 11 {
 		goto label
 	}
+	if n < 11 {
+		//跳出当前方法或者函数
+		//如果 return 是在main函数中，表示终止main函数，也就是说退出程序
+		return
+	}
 	fmt.Println("2")
 	fmt.Println("3")
 label:
