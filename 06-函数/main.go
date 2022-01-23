@@ -12,10 +12,23 @@ func myFun(funvar func(int, int) int, num1 int, num2 int) int {
 	return funvar(num1, num2)
 }
 
+/*
+ Go支持自定义数据类型
+基本语法： type 自定义数据类型名 数据类型 //相当取了一个别名
+如：type myint int
+如：type myFunType  func(int, int)int //这时 myFunType 就等价于一个函数类型 func(int, int)int
+*/
 type myFunType func(int, int) int
 
 func myFun1(funvar myFunType, num1 int, num2 int) int {
 	return funvar(num1, num2)
+}
+
+//支持对函数返回值命名
+func getSumandSub(n1 int, n2 int) (sum int, sub int) {
+	sub = n1 - n2
+	sum = n1 + n2
+	return
 }
 
 func main() {
@@ -23,13 +36,8 @@ func main() {
 	c := a(addSum, 5, 6)
 	a1 := myFun1
 	c1 := a1(addSum, 5, 6)
-	fmt.Printf("变量a的类型是%T，c的值是%d", a, c)
-	fmt.Printf("变量a1的类型是%T，c1的值是%d", a1, c1)
+	fmt.Printf("变量a的类型是%T，c的值是%d\n", a, c)
+	fmt.Printf("变量a1的类型是%T，c1的值是%d\n", a1, c1)
+	x, y := getSumandSub(4, 3)
+	fmt.Println("变量x，y是]n\n", x, y)
 }
-
-/*
- Go支持自定义数据类型
-基本语法： type 自定义数据类型名 数据类型 //相当取了一个别名
-如：type myint int
-如：type myFunType  func(int, int)int //这时 myFunType 就等价于一个函数类型 func(int, int)int
-*/
