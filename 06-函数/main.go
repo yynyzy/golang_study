@@ -44,6 +44,7 @@ func getSumandSub(n1 int, n2 int) (sum int, sub int) {
 	}
 
 	(1) agrs 是 slice切片，通过args[index] 可以访问到各个值
+	(2) 如果一个函数的形参列表中国有可变参数，则可变参数（args...） 需要放在形参列表最后
 */
 func sum(n1 int, args ...int) (sum int) {
 	sum = n1
