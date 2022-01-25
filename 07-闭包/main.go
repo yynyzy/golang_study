@@ -37,6 +37,7 @@ func main() {
 	fmt.Println(f(1)) //11
 	fmt.Println(f(2)) //13
 
-	fmt.Println(makeSuffix(".jpg")("YZY"))
-	fmt.Println(makeSuffix(".jpg")("YYN.jpg"))
+	f2 := makeSuffix(".jpg")
+	fmt.Println(f2("YZY"))
+	fmt.Println(f2("YYN.jpg"))
 }
