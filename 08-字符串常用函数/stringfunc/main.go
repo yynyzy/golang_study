@@ -69,15 +69,33 @@ func main() {
 	index = strings.LastIndex("go golang", "go") //3
 	fmt.Printf("index=%v\n", index)
 
-	//将指定的子串替换成另外一个子串: strings.Replace("to go hello", "go","go语言",n)
-	//n可以指定你希望替换几个,如果n=-1表示全部替换
+	//13)将指定的子串替换成另外一个子串: strings.Replace("to go hello", "go","go语言",n)
+	//n可以指定你希望替换几个,如果 n= -1表示全部替换
 	str2 = "go go hello"
 	str = strings.Replace(str2, "go", "北京", -1) //返回一个新字符串
 	fmt.Printf("str=%v\n", str)
 
-	//按照指定的某个字符，为分割标识，将一个字符串拆分成字符串数组:
+	//14)按照指定的某个字符，为分割标识，将一个字符串拆分成字符串数组:
 	//strings.split(""hello,wrold,ok", ",")
 	strArr := strings.Split("hello,wrold,ok", ",	")
 	fmt.Printf("strArr=%v\n", strArr)
+
+	//15)将字符串的字母进行大小写的转换:
+	//strings.ToLower("Go") // go
+	//strings.ToUpper("go") //GO
+	str = "GoLang Hello"
+	str = strings.ToLower(str)
+	fmt.Printf("str=%v\n", str) //golang hello
+	str = strings.ToUpper(str)
+	fmt.Printf("str=%v\n", str) //GOLANG HELLO
+
+	//16)将字符串左右两边的空格去掉:strings.TrimSpace(" tn a lone gopher ntrn ")
+	str = strings.TrimSpace(" tn a lone gopher ntrn ")
+	fmt.Printf("str=%q\n", str)
+
+	//17)将字符串左右两边指定的字符去掉:
+	//strings.Trim("! hello! ","!") // ["hello"] //将左右两边!和 " " 去掉
+	str = strings.Trim(" ! hello!! ", " !")
+	fmt.Printf("str=%q\n", str)
 
 }
