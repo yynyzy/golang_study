@@ -98,4 +98,15 @@ func main() {
 	str = strings.Trim(" ! hello!! ", " !")
 	fmt.Printf("str=%q\n", str)
 
+	//18)将字符串右边指定的字符去掉:strings.TrimLeft("'! hello! ", " !")
+	//19)将字符串右边指定的字符去掉:strings.TrimRight("'! hello! ", " !")
+
+	//20)判断字符串是否以指定的字符串开头:
+	//strings.HasPrefix("ftp://192.168.10.1","ftp") // true
+	b = strings.HasPrefix("ftp://192.168.10.1", "ftp") //true
+	fmt.Printf("b=%v\n", b)
+
+	//21)判断字符串是否以指定的字符串结尾:
+	//strings.HasSuffix("ftp://192.168.10.1","ftp") // true
+
 }
