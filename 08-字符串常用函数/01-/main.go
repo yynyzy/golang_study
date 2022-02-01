@@ -54,4 +54,14 @@ func main() {
 	num := strings.Count("ceheese", "se")
 	fmt.Printf("num=%v\n", num)
 
+	//10)不区分大小写的字符串比较(==是区分字母大小写的):
+	b = strings.EqualFold("abc", "Abc")
+	fmt.Printf("b=%v\n", b)           //true
+	fmt.Println("结果", "abc" == "Abc") // false //区分字母大小写
+
+	//11)返回子串在字符串第一次出现的index值,如果没有返回-1:
+	//strings .Index("NLT_abc", "abc") //4
+	index := strings.Index("NLT_abcabcabc", "abc") //4
+	fmt.Printf("index=%v\n", index)
+
 }
