@@ -64,4 +64,20 @@ func main() {
 	index := strings.Index("NLT_abcabcabc", "abc") //4
 	fmt.Printf("index=%v\n", index)
 
+	//12)返回子串在字符串最后一次出现的index
+	//如没有返回-1 :  strings.LastIndex( "go golang", "go")
+	index = strings.LastIndex("go golang", "go") //3
+	fmt.Printf("index=%v\n", index)
+
+	//将指定的子串替换成另外一个子串: strings.Replace("to go hello", "go","go语言",n)
+	//n可以指定你希望替换几个,如果n=-1表示全部替换
+	str2 = "go go hello"
+	str = strings.Replace(str2, "go", "北京", -1) //返回一个新字符串
+	fmt.Printf("str=%v\n", str)
+
+	//按照指定的某个字符，为分割标识，将一个字符串拆分成字符串数组:
+	//strings.split(""hello,wrold,ok", ",")
+	strArr := strings.Split("hello,wrold,ok", ",	")
+	fmt.Printf("strArr=%v\n", strArr)
+
 }
