@@ -27,4 +27,18 @@ func main() {
 		fmt.Println("转换的结果是", n)
 	}
 
+	//4.整数转字符串：
+	str = strconv.Itoa(121)
+	fmt.Printf("str=%v,str=%T\n", str, str)
+
+	//5)字符串转[]byte: var bytes = []byte("hello go")
+	var bytes = []byte("he1lo go")
+	fmt.Printf("bytes=%v\n", bytes)
+	//6)[]byte转字符串:str = string([]byte[97,98,99})
+	str = string([]byte{97, 98, 99})
+	fmt.Printf("str=%v\n", str)
+	//10进制转2，8，16进制:str = strconv.FormatInt(123，2),返回对应的字符串
+	str = strconv.FormatInt(123, 2)
+	fmt.Printf("123对应的二进制是=%v", str)
+
 }
