@@ -77,7 +77,7 @@ func main() {
 
 	//14)按照指定的某个字符，为分割标识，将一个字符串拆分成字符串数组:
 	//strings.split(""hello,wrold,ok", ",")
-	strArr := strings.Split("hello,wrold,ok", ",	")
+	strArr := strings.Split("hello,wrold,ok", ",")
 	fmt.Printf("strArr=%v\n", strArr)
 
 	//15)将字符串的字母进行大小写的转换:
