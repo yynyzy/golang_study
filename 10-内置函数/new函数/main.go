@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+//内建函数new分配内存。其第一个实参为类型，而非值。其返回值为指向该类型的新分配的零值的指针。
+
 func main() {
 	num1 := 100
 	fmt.Printf("num1的类型%T , num1的值=%v , num1的地址%v\n", num1, num1, &num1)
