@@ -10,9 +10,11 @@ var a [5]int
 */
 
 func main() {
-	var intArr [3]int32 //int占8个字节(int64)
-	//当我们定义完数组后,其实数组的各个元素有默认值
+	var intArr [3]int //int占8个字节(int64)
+	//当我们定义完数组后,其实数组的各个元素有默认值 0
 	fmt.Println(intArr)
+	//1.数组的地址可以通过数组名来获取&intArr
+	//2数组的第一个元素的地址，就是数组的首地址
 	fmt.Printf("intArr的地址=%p intArr[0]地址%p\nintArr[1]地址%p\nintArr[2]地址%p",
 		&intArr, &intArr[0], &intArr[1], &intArr[2])
 }

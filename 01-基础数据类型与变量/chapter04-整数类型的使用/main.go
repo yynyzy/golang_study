@@ -18,11 +18,11 @@ func main() {
 	var y int8 = 127
 	fmt.Println(y)
 
-	//测试一下 无符号整数 uint8 （0 ~ 2^8-1）,unit16，uint32，uint64 的范围
+	//测试一下 无符号整数 uint8 （0 ~ 2^8-1）,uint16，uint32，uint64 的范围
 	var k uint8 = 255
 	fmt.Println(k)
 
-	//int（系统32位 4 字节，64位 8字节）, uint（系统32位 4 字节，64位 8字节）, rune（与 int32等价） , byte(与 unit8等价) 的使用
+	//int（系统32位 4 字节，64位 8字节）, uint（系统32位 4 字节，64位 8字节）, rune（与 int32等价） , byte(与 Uint8等价) 的使用
 	var a int = 8900
 	fmt.Println("a=", a)
 	var b uint = 1
