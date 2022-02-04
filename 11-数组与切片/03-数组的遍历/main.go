@@ -5,15 +5,15 @@ import (
 )
 
 func way1() {
-	var intArr [6]int = [6]int{2, 3, 4, 5, 6, 7}
-	for i, v := range intArr {
-		fmt.Printf("intArr[%d]的值为%v\n", i, v)
+	var intArr1 [6]int = [6]int{2, 3, 4, 5, 6, 7}
+	for i, v := range intArr1 {
+		fmt.Printf("intArr1[%d]的值为%v\n", i, v)
 	}
 }
 func way2() {
-	var intArr [6]int = [6]int{2, 3, 4, 5, 6, 7}
-	for i := 0; i < len(intArr); i++ {
-		fmt.Printf("intArr[%d]的值为%v\n", i, intArr[i])
+	intArr2 := [...]string{"yyn", "yzy", "qq"}
+	for i := 0; i < len(intArr2); i++ {
+		fmt.Printf("intArr2[%d]的值为%v\n", i, intArr2[i])
 	}
 }
 func main() {
