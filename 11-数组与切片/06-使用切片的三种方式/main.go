@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 切片的使用
 #方式1
@@ -11,5 +13,11 @@ package main
 参数说明: type:就是数据类型  len:大小   cap:指定切片容量，可选
 **/
 func main() {
-
+	var slice []int = make([]int, 5, 10)
+	fmt.Println("slice的元素", slice)
+	slice[1] = 10
+	slice[3] = 20
+	fmt.Println("slice的元素", slice)
+	fmt.Println("slice的长度size=", len(slice))
+	fmt.Println("slice的容量cap=", cap(slice))
 }
