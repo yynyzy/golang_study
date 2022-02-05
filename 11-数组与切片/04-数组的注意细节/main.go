@@ -33,4 +33,5 @@ func main() {
 	test1(arr)
 	test2(&arr)
 	fmt.Printf("arr数组的值为%v", arr)
+
 }
