@@ -37,13 +37,16 @@ func main() {
 	slice = append(slice, slice...)
 	fmt.Printf("第三次slice:%v,slice的地址=%p\n", slice, &slice)
 
-	//内置copy函数将第二个切片复制到第一个切片，两个参数都必须是切片
+	/*内置copy(par1,par2)函数
+	·两个参数都必须是切片
+	·将第二个切片复制到第一个切片
+	**/
 	var slice3 = []int{1, 2, 3, 4, 5}
 	slice4 := make([]int, 10)
 	copy(slice4, slice3)
 	fmt.Println("slice3", slice3)
 	fmt.Println("slice4", slice4)
-	slice3[1] = 100
+	slice3[1] = 100 //数据空间独立，不会互相影响
 	fmt.Println("slice3", slice3)
 	fmt.Println("slice4", slice4)
 }
