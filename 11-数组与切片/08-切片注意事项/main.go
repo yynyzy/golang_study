@@ -19,7 +19,7 @@ import "fmt"
 func main() {
 	//用append内置函数，可以对切片进行动态追加
 
-	/*
+	/*1.
 	   切片append操作的底层原理分析:
 	   1)切片append操作的本质就是对数组扩容
 	   2) go底层会创建一下新的数组newArr(如果没有超过cap时，扩容直接在尾部追加，当新数组长度超过了cap时才会拥有新的地址)
@@ -37,9 +37,11 @@ func main() {
 	slice = append(slice, slice...)
 	fmt.Printf("第三次slice:%v,slice的地址=%p\n", slice, &slice)
 
-	/*内置copy(par1,par2)函数
-	·两个参数都必须是切片
-	·将第二个切片复制到第一个切片
+	/*2.
+		内置copy(par1,par2)函数
+		·append会扩容，copy不会扩容
+		·两个参数都必须是切片
+		·将第二个切片复制到第一个切片
 	**/
 	var slice3 = []int{1, 2, 3, 4, 5}
 	slice4 := make([]int, 10)
@@ -49,4 +51,5 @@ func main() {
 	slice3[1] = 100 //数据空间独立，不会互相影响
 	fmt.Println("slice3", slice3)
 	fmt.Println("slice4", slice4)
+
 }
