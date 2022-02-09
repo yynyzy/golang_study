@@ -13,7 +13,13 @@ func main() {
 	cities["no3"] = "上海~"
 	fmt.Println(cities)
 
-	//删除操作
+	/*
+		删除操作
+			➢细节说明
+			1)如果我们要删除map的所有key ,没有一个专门的方法一次删除， 可以遍历一下key,逐个删除
+			2)或者map = make(...),. make一个新的，让原来的成为垃圾，被 gc 回收
+
+	*/
 	delete(cities, "no1")
 	fmt.Println(cities)
 	//当delete指定的key不存在时,删除不会操作,也不会报错
