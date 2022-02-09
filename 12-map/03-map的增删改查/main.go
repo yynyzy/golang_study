@@ -26,4 +26,17 @@ func main() {
 	delete(cities, "no4")
 	fmt.Println(cities)
 
+	//演示map的查找
+	val, findRes := cities["no1"]
+	if findRes {
+		fmt.Printf("有no1 key 值为%v\n", val)
+	} else {
+		fmt.Printf("没有no1 key\n")
+	}
+	//如果希望一次性删除所有的key
+	//1.遍历所有的key,如何逐一删除[遍历]
+	//2.直接make一个新的空间
+	cities = make(map[string]string)
+	fmt.Println(cities)
+
 }
