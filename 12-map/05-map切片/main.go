@@ -14,5 +14,11 @@ func main() {
 		monster[1]["name"] = "yzy"
 		monster[1]["age"] = "17"
 	}
+	//如果需要动态增加 monster
+	newMonster := map[string]string{
+		"name": "yzy",
+		"age":  "17",
+	}
+	monster = append(monster, newMonster)
 	fmt.Println(monster)
 }
