@@ -16,8 +16,8 @@ func main() {
 	}
 	//如果需要动态增加 monster
 	newMonster := map[string]string{
-		"name": "yzy",
-		"age":  "17",
+		"name": "yaa",
+		"age":  "11",
 	}
 	monster = append(monster, newMonster)
 	fmt.Println(monster)
