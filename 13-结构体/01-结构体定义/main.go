@@ -17,7 +17,7 @@ func main() {
 	cat1.Name = "yzy"
 	cat1.Age = 18
 
-	fmt.Println("cat1", cat1)
-	fmt.Println("cat1的地址", &cat1)
+	fmt.Println("cat1=", cat1)
+	fmt.Printf("cat1的地址=%p", &cat1) //结构体是值类型
 
 }
