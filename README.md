@@ -79,11 +79,12 @@ Go语言提供了两种切片的表达式：
 
 1、简单表达式
 2、扩展表达式
-1、简单的表达式
+
+*1、简单的表达式*
 简单切片表达式的格式[low:high]。
 
 如下面例子，n为一个切片，当用这个表达式[1:4]表示的是左闭右开[low, high)区间截取一个新的切片（例子中结果是[2 3 4]），切片被截取之后，截取的长度是high-low。
-
+```go
  n := []int{1, 2, 3, 4, 5, 6}
  fmt.Println(n[1:4])      // [2 3 4]
 切片表达式的开始low和结束索引high是可选的；它们分别默认为零和切片的长度：
@@ -97,25 +98,28 @@ fmt.Println(n[1:])       // [2 3 4 5 6]，:后面没有值，默认表示切片�
 
 2、当n为切片的时候，表达式n[low:high]中high最大值变成了cap(n)，low和high的取值关系：
 0 <= low <=high <= cap(n)
+```
 
 不满足以上条件会发送越界panic。
-
 截取字符串
 注意截取字符串，产生的也是新的字符串。
-
+```go
  s := "hello taibai"
  s1 := s[6:]
  fmt.Println(s1)                 // taibai
  fmt.Println(reflect.TypeOf(s1)) // string
-2、扩展表达式
-简单表达式生产的新切片与原数组或切片会共享底层数组，虽然避免了copy，但是会带来一定的风险。下面这个例子当新的n1切片append添加元素的时候，覆盖了原来n的索引位置4的值，导致你的程序可能是非预期的，从而产生不良的后果。
+ ```
 
+*扩展表达式*
+简单表达式生产的新切片与原数组或切片会共享底层数组，虽然避免了copy，但是会带来一定的风险。下面这个例子当新的n1切片append添加元素的时候，覆盖了原来n的索引位置4的值，导致你的程序可能是非预期的，从而产生不良的后果。
+```go
  n := []int{1, 2, 3, 4, 5, 6}
  n1 := n[1:4]
  fmt.Println(n)       // [1 2 3 4 5 6]
  fmt.Println(n1)      // [2 3 4]
  n1 = append(n1, 100) // 把n的索引位置4的值从原来的5变成了100
  fmt.Println(n)       // [1 2 3 4 100 6]
+ ```
 Go 1.2[3]中提供了一种可以限制新切片容量的表达式：
 
 n[low:high:max]
@@ -134,24 +138,25 @@ n[1:4]的长度是3好理解（4-1），容量为什么是5？
 因为切片n[1:4]和切片n是共享底层空间，所以它的容量并不等于他的长度3，根据1等于索引1的位置（等于值2），从值2这个元素开始到末尾元素6，共5个，所以n[1:4]容量是5。
 
 如果append超过切片的长度会重新生产一个全新的切片，不会覆盖原来的：
-
+```go
  n2 := n[1:4:5]         // 长度等于3，容量等于4
  fmt.Printf("%p\n", n2) // 0xc0000ac068
  n2 = append(n2, 5)
  fmt.Printf("%p\n", n2) // 0xc0000ac068
  n2 = append(n2, 6)
  fmt.Printf("%p\n", n2) // 地址发生改变，0xc0000b8000
+```
 
 ## ·切片技巧
-AppendVector
+### *AppendVector*
 这个是添加一个切片的操作，上面我们在切片操作中已经介绍过。
-
+```go
 a = append(a, b...)
+```
 
-
-Copy
+### *Copy*
 这边给我们展示了三种copy的写法：
-
+```go
 b := make([]T, len(a))
 copy(b, a)
 
@@ -162,72 +167,71 @@ b = append(a[:0:0], a...)
 // 这个实现等价于make+copy。
 // 但在Go工具链v1.16上实际上会比较慢。
 b = append(make([]T, 0, len(a)), a...)
+```
 
-
-Cut
+### *Cut*
 截掉切片[i,j）之间的元素：
-
+```go
 a = append(a[:i], a[j:]...)
+```
 
-
-Cut（GC）
+### *Cut（GC）*
 上面的Cut如果元素是指针的话，会存在内存泄露，所以我们要对删除的元素设置nil，等待GC。
-
-
+```go
 copy(a[i:], a[j:])
 for k, n := len(a)-j+i, len(a); k < n; k++ {
  a[k] = nil // or the zero value of T
 }
 a = a[:len(a)-j+i]
+```
 
-
-Delete
+### *Delete*
 删除索引位置i的元素：
-
+```go
 a = append(a[:i], a[i+1:]...)
 // or
 a = a[:i+copy(a[i:], a[i+1:])]
+```
 
-
-Delete（GC）
+### *Delete（GC）*
 删除索引位置i的元素：
-
+```go
 copy(a[i:], a[i+1:])
 a[len(a)-1] = nil // or the zero value of T
 a = a[:len(a)-1]
+```
 
-
-Delete without preserving order
+### *Delete without preserving order*
 删除索引位置i的元素，把最后一位放到索引位置i上，然后把最后一位元素删除。这种方式底层并没有发生复制操作。
-
+```go
 a[i] = a[len(a)-1] 
 a = a[:len(a)-1]
+```
 
-
-Delete without preserving order（GC）
+### *Delete without preserving order（GC）*
 上面的删除操作，元素是一个指针的类型或结构体指针字段，会存在最后一个元素不能被GC掉，造成泄露，把末尾的元素设置nil，等待GC。
-
+```go
 a[i] = a[len(a)-1]
 a[len(a)-1] = nil
 a = a[:len(a)-1]
+```
 
-
-Expand
+### *Expand*
 这个本质上是多个append的组合操作。
-
+```go
 a = append(a[:i], append(make([]T, j), a[i:]...)...)
+```
 
 
-
-Extend
+### *Extend*
 用新列表扩展原来的列表
-
+```go
 a = append(a, make([]T, j)...)
+```
 
-
-Filter (in place)
+### *Filter (in place)*
 下面代码演示原地删除Go切片元素：
-
+```go
 n := 0
 for _, x := range a {
  if keep(x) {
@@ -236,20 +240,21 @@ for _, x := range a {
  }
 }
 a = a[:n]
+```
 
-
-Insert
+### *Insert*
+```go
 a = append(a[:i], append([]T{x}, a[i:]...)...)
 第二个append会产生新的切片，产生一次copy，可以用以下代码方式，可免去第二次的copy：
 
 s = append(s, 0 /* 先添加一个0值*/)
 copy(s[i+1:], s[i:])
 s[i] = x
+```
 
-
-InsertVector
+### *InsertVector*
 下面代码演示插入向量（封装了动态大小数组的顺序容器）的实现：
-
+```go
 a = append(a[:i], append(b, a[i:]...)...)
 func Insert(s []int, k int, vs ...int) []int {
  if n := len(s) + len(vs); n <= cap(s) {
@@ -266,23 +271,27 @@ func Insert(s []int, k int, vs ...int) []int {
 }
 
 a = Insert(a, i, b...)
+```
 
-
-Push
+### *Push*
+```go
 a = append(a, x)
+```
 
-
-Pop
+### *Pop*
+```go
  x, a = a[len(a)-1], a[:len(a)-1]
+```
 
-
-Push Front/Unshift
+### *Push Front/Unshift*
+```go
 a = append([]T{x}, a...)
+```
 
-
-Pop Front/Shift
+### *Pop Front/Shift*
+```go
 x, a = a[0], a[1:]
-
+```
 
 
 
