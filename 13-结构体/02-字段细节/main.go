@@ -7,7 +7,7 @@ import "fmt"
 type Person struct {
 	Name   string
 	Age    int
-	scores [5]float64
+	scores [2]float64
 	ptr    *int              //指针
 	slice  []int             //切片
 	map1   map[string]string //切片
@@ -20,4 +20,14 @@ func main() {
 	if p1.ptr == nil {
 		fmt.Println("ok1")
 	}
+	if p1.slice == nil {
+		fmt.Println("ok2")
+	}
+	if p1.map1 == nil {
+		fmt.Println("ok3")
+	}
+	p1.slice = []int{1, 2, 3}
+	fmt.Println(p1.slice)
+	p1.ptr = new(int)
+	fmt.Println(p1.ptr)
 }
