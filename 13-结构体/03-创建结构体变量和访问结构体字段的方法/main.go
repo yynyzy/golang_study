@@ -31,6 +31,8 @@ func main() {
 	fmt.Println("p3=", *p3)
 
 	//方式4-{}
+
+	// var person *Person = &Person{"mary",80}
 	var person *Person = &Person{}
 	//因为person是一个指针，因此标准的访间字段的方法
 	// (*person) .Name =”scott"
