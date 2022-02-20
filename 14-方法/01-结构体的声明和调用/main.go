@@ -21,8 +21,8 @@ func main() {
 	var p Person
 
 	p.Name = "Tom"
-	p.test() //调用方法
-	fmt.Println("main()", p.Name)
+	p.test()                      //调用方法，把 p 传进去
+	fmt.Println("main()", p.Name) //值传递所以不影响
 
 	// test()   //错误的调用
 }
