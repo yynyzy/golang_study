@@ -22,7 +22,7 @@ func main() {
 
 	p.Name = "Tom"
 	p.test()                      //调用方法，把 p 传进去
-	fmt.Println("main()", p.Name) //值传递所以不影响
+	fmt.Println("main()", p.Name) //这里的 p 是副本，值传递所以不影响外面的
 
 	// test()   //错误的调用
 }
