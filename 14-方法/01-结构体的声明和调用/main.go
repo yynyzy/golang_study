@@ -12,6 +12,11 @@ func (p Person) test() {
 	fmt.Println("test()", p.Name)
 }
 
+func (p Person) add(n1, n2 int) int {
+	res := n1 + n2
+	return res
+}
+
 //对上面的语法的说明
 
 //1) func(p Person) test{}   表示 Person 结构体有一方法，方法名为test
@@ -21,8 +26,10 @@ func main() {
 	var p Person
 
 	p.Name = "Tom"
+	// test()   //错误的调用,必须使用 p.test() 的用法
 	p.test()                      //调用方法，把 p 传进去
 	fmt.Println("main()", p.Name) //这里的 p 是副本，值传递所以不影响外面的
 
-	// test()   //错误的调用
+	res := p.add(1, 2)
+	fmt.Println("res=", res)
 }
