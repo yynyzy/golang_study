@@ -50,11 +50,13 @@ func main() {
 	pupil.testing()
 	pupil.Student.SetScore(70)
 	pupil.Student.ShowInfo()
+
+	//简略写法
 	graduate := &Graduate{}
-	graduate.Student.Name = "mary~"
-	graduate.Student.Age = 28
+	graduate.Name = "mary~"
+	graduate.Age = 28
 	graduate.testing()
-	graduate.Student.SetScore(99)
-	graduate.Student.ShowInfo()
+	graduate.SetScore(99)
+	graduate.ShowInfo()
 
 }
