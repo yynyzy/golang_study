@@ -16,6 +16,8 @@ func main() {
 	fmt.Printf("ptr=%v\n", ptr)
 	fmt.Printf("ptr 的地址是=%v\n", &ptr)
 	fmt.Printf("ptr 指向的值是=%v\n", *ptr)
+	*ptr = 100
+	fmt.Println(i) //100
 
 	// 内存图
 	// ptr ——> 0x0011(地址为:0x00333) ——> 128(地址为: 0x0011)

@@ -14,4 +14,5 @@ func main() {
 	stu := model.NewStudent("yzy", 18)
 	//student结构体首字母是小写，可以通过工厂模式来解决
 	fmt.Println(*stu)
+	fmt.Println("stu的score为=", stu.GetScore())
 }
