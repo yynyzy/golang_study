@@ -10,15 +10,27 @@ package main
 func (var结构体类型名)SetXxx(参数列表) (返回值列表){
 	//加入数据验证的业务逻辑
 	var.字段=参数
-	提供一个首字母大写的Get方法(类似其它语言的public)，用于获取属性的值func (var结构体类型名)
-	GetXxx(){
-		return var.字段
-	}
+}
+提供一个首字母大写的Get方法(类似其它语言的public)，用于获取属性的值
+func (var结构体类型名) GetXxx(){
+		return var.age
 }
 
 !特别说明。在Golang开发中并没有特别强调封装，这点并不像Java.所以提醒学过java的朋友，不用总是用java的语法特性来看待Golang,Golang本身对面向对象的特性做了简化的.
 
 */
-func main() {
 
+import (
+	"fmt"
+	"go_code/go_study/16-面向对象三大特性/01-封装/model"
+)
+
+func main() {
+	//创建一个account变量
+	account := model.NewAccount("jzh11111", "999999", 40)
+	if account != nil {
+		fmt.Println("创建成功=", account)
+	} else {
+		fmt.Println("创建失败")
+	}
 }
