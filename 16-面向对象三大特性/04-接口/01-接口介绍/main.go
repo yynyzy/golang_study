@@ -41,4 +41,7 @@ func main() {
 	camera := camera{}
 	computer.Working(phone)
 	computer.Working(camera)
+	var _phone Usb = phone
+	_phone.start()
+	_phone.stop()
 }
