@@ -9,8 +9,8 @@ func main() {
 	cities["no1"] = "北京"
 	cities["no2"] = "天津"
 	cities["no3"] = "上海"
-	for k, v := range cities {
-		fmt.Printf("k=%v v=%v\n", k, v)
+	for key, val := range cities {
+		fmt.Printf("k=%v v=%v\n", key, val)
 	}
 	fmt.Println("cities有", len(cities), "对key-value")
 
