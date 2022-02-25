@@ -9,3 +9,39 @@ package main
 1.多态参数
 2.多态接口
 */
+import "fmt"
+
+type Usb interface {
+	start()
+	stop()
+}
+type Phone struct {
+	Name string
+}
+
+func (p Phone) start() {
+	fmt.Println("手机Starting")
+}
+func (p Phone) stop() {
+	fmt.Println("手机Starting")
+}
+
+type Camera struct {
+	Name string
+}
+
+func (c Camera) start() {
+	fmt.Println("照相机Starting")
+}
+func (c Camera) stop() {
+	fmt.Println("照相机Stoping")
+}
+func main() {
+	//定义一个usb接口裁组,可以存放Phone和camera的结构体变量
+	//这里就体现出多态数组
+	var usbArr [3]Usb
+	usbArr[0] = Phone{"vivo"}
+	usbArr[1] = Phone{"小米"}
+	usbArr[2] = Camera{"尼康"}
+	fmt.Println(usbArr)
+}
