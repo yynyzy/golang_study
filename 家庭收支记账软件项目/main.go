@@ -6,11 +6,11 @@ func main() {
 	//声明一个变量，保存接收用户输入的选项
 	key := ""
 	//账户余额
-	// balance := 10000.0
+	balance := 10000.0
 	//每次收支金额
-	// money := 0.0
+	money := 0.0
 	//每次收支说明
-	// note := ""
+	note := ""
 	//收支明细
 	details := "收支\t账户金额\t收支金额\t说  明"
 	//显示这个主菜单
@@ -27,9 +27,13 @@ table:
 		case "1":
 			fmt.Println("进入收支明细")
 			fmt.Println(details)
-
 		case "2":
-			fmt.Println("进入登记收入")
+			fmt.Println("请输入本次收入金额")
+			fmt.Scanln(&money)
+			balance += money
+			fmt.Println("请输入收支说明")
+			fmt.Scanln(&note)
+			details += fmt.Sprintf("\n收入\t 	%v\t		%v\t      %v", balance, money, note)
 
 		case "3":
 			fmt.Println("进入登记支出")
