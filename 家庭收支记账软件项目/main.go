@@ -36,11 +36,31 @@ table:
 			details += fmt.Sprintf("\n收入\t 	%v\t		%v\t      %v", balance, money, note)
 
 		case "3":
-			fmt.Println("进入登记支出")
-
+			fmt.Println("请输入本次支出金额")
+			fmt.Scanln(&money)
+			if money > balance {
+				fmt.Println("账户余额不足")
+				break
+			}
+			balance -= money
+			fmt.Println("请输入收支说明")
+			fmt.Scanln(&note)
+			details += fmt.Sprintf("\n收入\t %v\t %v\t %v", balance, money, note)
 		case "4":
-			fmt.Println("退出软件")
-			break table
+			fmt.Println("你确认要退出软件吗? y/n")
+			choice := ""
+			for {
+				fmt.Scanln(&choice)
+				if choice == "y" || choice == "n" {
+					break
+				} else {
+					fmt.Println("你的输入错误，请输入正确选项！")
+				}
+			}
+			if choice == "y" {
+				break table
+			}
+
 		default:
 			fmt.Println("请输入正确的选项")
 		}
