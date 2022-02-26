@@ -15,8 +15,8 @@ table:
 	for {
 		fmt.Println("-------客户信息管理软件-------")
 		fmt.Println("1      添加客户")
-		fmt.Println("2     修改客户")
-		fmt.Println("3    删除客户")
+		fmt.Println("2      修改客户")
+		fmt.Println("3      删除客户")
 		fmt.Println("4      客户列表")
 		fmt.Println("5      退出软件")
 		fmt.Println("请选择(1-4):")
@@ -29,6 +29,8 @@ table:
 		case "3":
 			cv.add()
 		case "4":
+			cv.List()
+		case "5":
 			res := cv.exit()
 			if res {
 				break table

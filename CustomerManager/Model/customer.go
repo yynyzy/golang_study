@@ -12,7 +12,7 @@ type Customer struct {
 }
 
 func (c Customer) GetInfo() string {
-	info := fmt.Sprintf("\t%v\t%v\t%v\t%v\t%v\t%v", c.Id, c.Name, c.Gender, c.Age, c.Phone, c.Email)
+	info := fmt.Sprintf("%v\t%v\t%v\t%v\t%v\t%v", c.Id, c.Name, c.Gender, c.Age, c.Phone, c.Email)
 	return info
 }
 
