@@ -26,3 +26,12 @@ func NewCustomer(Id int, Name string, Gender string, Age int, Phone string, Emai
 		Email:  Email,
 	}
 }
+func NewCustomer2(Name string, Gender string, Age int, Phone string, Email string) Customer {
+	return Customer{
+		Name:   Name,
+		Gender: Gender,
+		Age:    Age,
+		Phone:  Phone,
+		Email:  Email,
+	}
+}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	model "golang_study/CustomerManager/Model"
 	service "golang_study/CustomerManager/Service"
 )
 
@@ -41,8 +42,6 @@ table:
 	}
 }
 
-func (cv *customerView) add() {}
-
 // func (cv *customerView) () {}
 // func (cv *customerView) MainMenu() {}
 func (cv *customerView) List() {
@@ -53,6 +52,31 @@ func (cv *customerView) List() {
 		fmt.Println(customer[i].GetInfo())
 	}
 	fmt.Println("-------------客户列表完成-------------")
+}
+func (cv *customerView) add() {
+	fmt.Println("---------------添加客户---------------")
+	fmt.Println("请输入名字")
+	name := ""
+	fmt.Scanln(&name)
+	fmt.Println("请输入性别")
+	gender := ""
+	fmt.Scanln(&gender)
+	fmt.Println("请输入年龄")
+	age := 0
+	fmt.Scanln(&age)
+	fmt.Println("请输入电话")
+	phone := ""
+	fmt.Scanln(&phone)
+	fmt.Println("请输入邮箱 ")
+	email := ""
+	fmt.Scanln(&email)
+	customer := model.NewCustomer2(name, gender, age, phone, email)
+	if cv.customerService.Add(customer) {
+		fmt.Println("---------------添加成功---------------")
+	} else {
+		fmt.Println("---------------添加失败---------------")
+
+	}
 }
 func (cv *customerView) exit() bool {
 
