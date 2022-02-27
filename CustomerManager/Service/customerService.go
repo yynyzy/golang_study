@@ -28,3 +28,21 @@ func (cs *CustomerService) Add(customer model.Customer) bool {
 	cs.customers = append(cs.customers, customer)
 	return true
 }
+func (cs *CustomerService) Delete(id int) bool {
+	index := cs.FindById(id)
+	if index == -1 {
+		return false
+	}
+
+	cs.customers = append(cs.customers[:index], cs.customers[index+1:]...)
+	return true
+}
+func (cs *CustomerService) FindById(id int) int {
+	index := -1
+	for i := 0; i < len(cs.customers); i++ {
+		if cs.customers[i].Id == id {
+			index = i
+		}
+	}
+	return index
+}

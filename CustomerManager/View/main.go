@@ -28,7 +28,7 @@ table:
 		case "2":
 			cv.add()
 		case "3":
-			cv.add()
+			cv.delete()
 		case "4":
 			cv.List()
 		case "5":
@@ -43,7 +43,7 @@ table:
 }
 
 // func (cv *customerView) () {}
-// func (cv *customerView) MainMenu() {}
+
 func (cv *customerView) List() {
 	customer := cv.customerService.List()
 	fmt.Println("---------------客户列表--------------")
@@ -76,6 +76,25 @@ func (cv *customerView) add() {
 	} else {
 		fmt.Println("---------------添加失败---------------")
 
+	}
+}
+func (cv *customerView) delete() {
+	fmt.Println("-----------------删除客户------------------")
+	fmt.Println("请输入删除客户的编号")
+	id := -1
+	fmt.Scanln(&id)
+	if id == -1 {
+		return //放弃
+	}
+	fmt.Println("你确认要删除吗? y/n")
+	choice := ""
+	fmt.Scanln(&choice)
+	if choice == "y" || choice == "Y" {
+		if cv.customerService.Delete(id) {
+			fmt.Println("删除成功")
+		} else {
+			fmt.Println("删除失败")
+		}
 	}
 }
 func (cv *customerView) exit() bool {
