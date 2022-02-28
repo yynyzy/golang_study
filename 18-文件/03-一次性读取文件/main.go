@@ -14,6 +14,8 @@ func main() {
 	if err != nil {
 		fmt.Println("打开文件失败！")
 	} else {
-		fmt.Println(content)
+		fmt.Println(content) //[]byte
+		fmt.Printf("%v", string(content))
+
 	}
 }
