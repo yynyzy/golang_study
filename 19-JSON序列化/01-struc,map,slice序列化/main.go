@@ -6,10 +6,12 @@ import (
 )
 
 //json.Marshal  返回的是 byte切片
+
+//tag 使用
 type Monster struct {
-	Name    string
-	Age     int
-	Address string
+	Name    string `json:"monster_name"`
+	Age     int    `json:"monster_age"`
+	Address string `json:"monster_age"`
 }
 
 func TestStruct() {
