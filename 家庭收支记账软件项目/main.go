@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	//声明一个变量，保存接收用户输入的选项
@@ -13,6 +15,7 @@ func main() {
 	note := ""
 	//收支明细
 	details := "收支\t账户金额\t收支金额\t说  明"
+	flag := false
 	//显示这个主菜单
 table:
 	for {
@@ -25,8 +28,11 @@ table:
 		fmt.Scanln(&key)
 		switch key {
 		case "1":
-			fmt.Println("进入收支明细")
-			fmt.Println(details)
+			if !flag {
+				fmt.Println("没有收支记录")
+			} else {
+				fmt.Println(details)
+			}
 		case "2":
 			fmt.Println("请输入本次收入金额")
 			fmt.Scanln(&money)
@@ -34,7 +40,7 @@ table:
 			fmt.Println("请输入收支说明")
 			fmt.Scanln(&note)
 			details += fmt.Sprintf("\n收入\t 	%v\t		%v\t      %v", balance, money, note)
-
+			flag = true
 		case "3":
 			fmt.Println("请输入本次支出金额")
 			fmt.Scanln(&money)
@@ -46,6 +52,7 @@ table:
 			fmt.Println("请输入收支说明")
 			fmt.Scanln(&note)
 			details += fmt.Sprintf("\n收入\t %v\t %v\t %v", balance, money, note)
+			flag = true
 		case "4":
 			fmt.Println("你确认要退出软件吗? y/n")
 			choice := ""
