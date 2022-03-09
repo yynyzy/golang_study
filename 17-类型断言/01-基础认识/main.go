@@ -14,10 +14,11 @@ type Point struct {
 func main() {
 	var a interface{} //空接口，可以接收任意类型
 	var point Point = Point{1, 2}
-	a = point //oK
 	//如何将a赋给一个Point变量?
+	a = point //oK
+
 	var b Point
-	// b = a不可以
+	// b = a 是不可以
 	b = a.(Point)
 	fmt.Println(b)
 
