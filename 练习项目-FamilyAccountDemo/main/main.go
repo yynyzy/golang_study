@@ -1,7 +1,7 @@
 package main
 
 import (
-	"golang_study/FamilyAccountDemo/utils"
+	"golang_study/练习项目-FamilyAccountDemo/utils"
 )
 
 func main() {

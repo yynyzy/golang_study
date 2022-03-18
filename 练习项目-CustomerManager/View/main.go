@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	model "golang_study/CustomerManager/Model"
-	service "golang_study/CustomerManager/Service"
+	model "golang_study/练习项目-CustomerManager/Model"
+	service "golang_study/练习项目-CustomerManager/Service"
 )
 
 type customerView struct {

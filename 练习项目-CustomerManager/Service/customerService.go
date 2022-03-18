@@ -1,7 +1,7 @@
 package service
 
 import (
-	model "golang_study/CustomerManager/Model"
+	model "golang_study/练习项目-CustomerManager/Model"
 )
 
 type CustomerService struct {
