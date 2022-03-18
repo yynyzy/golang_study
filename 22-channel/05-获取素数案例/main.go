@@ -50,13 +50,13 @@ func main() {
 		go findPrime(inChan, primeChan, exitChan)
 	}
 
-	go func() {
+	go func(primeChan chan int) {
 		for i := 0; i < 4; i++ {
 			<-exitChan
 		}
 		//当我们从exitChan 中取出 4个结果，说明四个协程全部跑完，可以关闭 primeChan
 		close(primeChan)
-	}()
+	}(primeChan)
 
 	//遍历 primeChan 取出素数
 	for v := range primeChan {
