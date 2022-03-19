@@ -15,12 +15,14 @@ func sleep() {
 	}
 }
 func test() {
+	//使用 recover 可以不会让一个出错的协程影响整个程序
 	defer func() {
 		if err := recover(); err != nil {
 			fmt.Printf("test()协程发生错误err=%d", err)
 		}
 	}()
-	var intmap map[int]string
+
+	var intmap map[int]string //因为没有 make 空间，所以报错
 	intmap[0] = "hello"
 }
 func main() {
