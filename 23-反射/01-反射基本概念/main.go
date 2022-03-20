@@ -13,13 +13,18 @@ import (
 	4)使用反射，需要import ("reflect")
 */
 func test01(b interface{}) {
-	//获取reflect.TypeOf
+	//通过反射获取传入变量的 type
 	rType := reflect.TypeOf(b)
-	fmt.Println("rType=", rType)
+	fmt.Println("type=", rType)
 
 	//获取reflect.ValueOf
 	rVal := reflect.ValueOf(b)
-	fmt.Printf("rVal=%v,rVal的类型是=%T\n", rVal, rVal) //rVal的类型是 reflect.Value
+	fmt.Printf("val=%v,val的类型是=%T\n", rVal, rVal) //rVal的类型是 reflect.Value
+
+	//获取变量的类型 kind
+	// rType.kind()
+	// rVal.kind()
+	fmt.Printf("kind1=%v,kind2=%v\n", rType.Kind(), rVal.Kind())
 
 	//将rVal 转换之后才能与 10 相加，不然类型不一样
 	n1 := 10 + rVal.Int()
@@ -37,11 +42,16 @@ func test01(b interface{}) {
 func test02(b interface{}) {
 	//获取reflect.TypeOf
 	rType := reflect.TypeOf(b)
-	fmt.Println("rType=", rType)
+	fmt.Println("type=", rType)
 
 	//获取reflect.ValueOf
 	rVal := reflect.ValueOf(b)
-	fmt.Printf("rVal=%v,rVal的类型是=%T\n", rVal, rVal)
+	fmt.Printf("val=%v,val的类型是=%T\n", rVal, rVal)
+
+	//获取变量的类型 kind
+	// rType.kind()
+	// rVal.kind()
+	fmt.Printf("kind1=%v,kind2=%v\n", rType.Kind(), rVal.Kind())
 
 	//将 rVal 转成 interface{}
 	iV := rVal.Interface()
@@ -49,7 +59,7 @@ func test02(b interface{}) {
 	//也可以使用 switch 的断言形式来做的更加灵活
 	v, ok := iV.(Student)
 	if ok {
-		fmt.Printf("stu.Name=%v", v.Name)
+		fmt.Printf("stu.Name=%v\n", v.Name)
 	}
 
 }
