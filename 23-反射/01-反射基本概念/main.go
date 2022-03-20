@@ -25,7 +25,7 @@ func test(b interface{}) {
 	n1 := 10 + rVal.Int()
 	fmt.Println("n1=", n1)
 
-	//将 rVal 转成 interface{}
+	//将 rVal 转成 interface{},最后重新转成 int 类型
 	iV := rVal.Interface()
 	//将 interface{} 通过断言转成需要的类型
 	num2 := iV.(int)
