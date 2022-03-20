@@ -13,16 +13,28 @@ import (
 	4)使用反射，需要import ("reflect")
 */
 func test(b interface{}) {
+	//获取reflect.TypeOf
 	rType := reflect.TypeOf(b)
 	fmt.Println("rType=", rType)
 
+	//获取reflect.ValueOf
 	rVal := reflect.ValueOf(b)
-	fmt.Println("rType=", rVal)
+	fmt.Printf("rVal=%v,rVal的类型是=%T\n", rVal, rVal) //rVal的类型是 reflect.Value
+
+	//将rVal 转换之后才能与 10 相加，不然类型不一样
 	n1 := 10 + rVal.Int()
 	fmt.Println("n1=", n1)
 
+	//将 rVal 转成 interface{}
+	iV := rVal.Interface()
+	//将 interface{} 通过断言转成需要的类型
+	num2 := iV.(int)
+	fmt.Println("num2=", num2)
+
 }
 func main() {
+	//演示对（基本数据类型、interface{}、reflect.Value）进行反射的基本操作
+
 	var num int = 8
 	test(num)
 }
