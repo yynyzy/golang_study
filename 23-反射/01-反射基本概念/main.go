@@ -12,7 +12,7 @@ import (
 	3)通过反射，可以修改变量的值，可以调用关联的方法。
 	4)使用反射，需要import ("reflect")
 */
-func test(b interface{}) {
+func test01(b interface{}) {
 	//获取reflect.TypeOf
 	rType := reflect.TypeOf(b)
 	fmt.Println("rType=", rType)
@@ -32,9 +32,45 @@ func test(b interface{}) {
 	fmt.Println("num2=", num2)
 
 }
+
+//以下是对 结构体的反射 处理
+func test02(b interface{}) {
+	//获取reflect.TypeOf
+	rType := reflect.TypeOf(b)
+	fmt.Println("rType=", rType)
+
+	//获取reflect.ValueOf
+	rVal := reflect.ValueOf(b)
+	fmt.Printf("rVal=%v,rVal的类型是=%T\n", rVal, rVal)
+
+	//将 rVal 转成 interface{}
+	iV := rVal.Interface()
+	//将 interface{} 通过断言转成需要的类型
+	//也可以使用 switch 的断言形式来做的更加灵活
+	v, ok := iV.(Student)
+	if ok {
+		fmt.Printf("stu.Name=%v", v.Name)
+	}
+
+}
+
+type Monster struct {
+	Name string
+	Age  int8
+}
+type Student struct {
+	Name string
+	Age  int8
+}
+
 func main() {
 	//演示对（基本数据类型、interface{}、reflect.Value）进行反射的基本操作
 
 	var num int = 8
-	test(num)
+	test01(num) //对基本数据类型
+
+	var stu = Student{"yzy", 18}
+	// var mon = Monster{"yzy", 18}
+	test02(stu) //对 结构体
+	// test02(mon)
 }
