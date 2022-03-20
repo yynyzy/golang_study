@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go_code/go_study/15-工厂模式/model"
+	"golang_study/15-工厂模式/model"
 )
 
 func main() {

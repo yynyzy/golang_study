@@ -22,7 +22,7 @@ func (var结构体类型名) GetXxx(){
 
 import (
 	"fmt"
-	"go_code/go_study/16-面向对象三大特性/01-封装/model"
+	"golang_study/16-面向对象三大特性/01-封装/model"
 )
 
 func main() {
