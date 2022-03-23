@@ -25,7 +25,7 @@ func main() {
 		if err != nil {
 			fmt.Printf("Accept() err=%v\n", err)
 		} else {
-			fmt.Printf("Accept() success conn=%v\n", conn)
+			fmt.Printf("Accept() success conn=%v,客户端ip=%v\n", conn, conn.RemoteAddr().String())
 		}
 		//这里准备一个协程，为客户端服务
 	}
