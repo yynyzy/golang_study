@@ -15,7 +15,7 @@ func process(conn net.Conn) {
 		//conn.Read(buf)
 		//等待客户端通过 conn 发送信息
 		//2.如果客户端没有write【发送】，那么协程在这阻塞
-		fmt.Printf("服务器在等待客户端%s 发送信息\n", conn.RemoteAddr().String())
+		// fmt.Printf("服务器在等待客户端%s 发送信息\n", conn.RemoteAddr().String())
 		n, err := conn.Read(buf) //从 conn 读取
 		if err == io.EOF {
 			fmt.Printf("客户端退出err=%v\n", err)
