@@ -10,10 +10,10 @@ func main() {
 	var key int
 	fmt.Println("------------欢迎来到聊天室系统-------------")
 	for loop {
-		fmt.Println("\t\t 1.进入聊天室")
-		fmt.Println("\t\t 2.注册用户")
-		fmt.Println("\t\t 3.退出系统")
-		fmt.Println("请输入{1～3}进行选择")
+		fmt.Println("\t\t\t 1.进入聊天室")
+		fmt.Println("\t\t\t 2.注册用户")
+		fmt.Println("\t\t\t 3.退出系统")
+		fmt.Println("\t\t\t请输入{1～3}进行选择")
 		fmt.Scanln(&key)
 
 		switch key {
