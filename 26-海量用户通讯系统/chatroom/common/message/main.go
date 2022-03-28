@@ -1,8 +1,8 @@
-package common
+package message
 
 const (
-	Login_MessageType          = "LoginMessage"
-	Login_Response_MessageType = "Login_Response_Message"
+	Login_Mes_Type     = "Login_Message"
+	Login_Res_Mes_Type = "Login_Response_Message"
 )
 
 type Message struct {
