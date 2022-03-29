@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
 	"net"
+	"time"
 )
 
 func login(UserId int, UserPwd string) (err error) {
@@ -48,6 +49,15 @@ func login(UserId int, UserPwd string) (err error) {
 		fmt.Println("conn.Write(bytes) fail err", err)
 		return
 	}
-	fmt.Printf("客户端发送信息的长度=%d,内容是=%s\n", pkglen, string(data))
+	// fmt.Printf("客户端发送信息的长度=%d,内容是=%s\n", pkglen, string(data))
+
+	//发送消息本身
+	_, err = conn.Write(data)
+	if n != 4 || err != nil {
+		fmt.Println("conn.Write(data) fail err", err)
+		return
+	}
+	time.Sleep(time.Second * 5)
+	fmt.Println("客户端休眠了5s")
 	return
 }

@@ -26,20 +26,24 @@ func main() {
 		case 3:
 			fmt.Println("退出系统")
 			loop = false
+		default:
+			fmt.Println("请输入正确的序号")
 		}
 	}
 	if key == 1 {
 		//说明用户要登陆，输入用户id与密码
 		fmt.Println("请输入用户Id")
-		fmt.Scanln(&UserId)
+		fmt.Scanf("%v\n", &UserId)
 		fmt.Println("请输入用户密码")
 		fmt.Scanln(&UserPwd)
-
+		fmt.Println("UserId=", UserId)
 		err := login(UserId, UserPwd)
 		if err != nil {
-			fmt.Println("用户登陆成功")
-		} else {
 			fmt.Println("用户登陆失败")
+			return
+		} else {
+			fmt.Println("用户登陆成功")
+
 		}
 	} else if key == 2 {
 		fmt.Println("注册用户")
