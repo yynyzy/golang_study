@@ -17,17 +17,17 @@ func process(conn net.Conn) {
 			fmt.Println("conn.Read() err=", err)
 			return
 		}
-		fmt.Println("读到的buf")
+		fmt.Println("读到的buf=", buf[:4])
 	}
 }
 func main() {
 	fmt.Println("服务端监听8889端口")
 	listen, err := net.Listen("tcp", "localhost:8889")
-	defer listen.Close()
 	if err != nil {
 		fmt.Println("net.Dial err=", err)
 		return
 	}
+	defer listen.Close()
 
 	for {
 		fmt.Println("服务端等待连接")

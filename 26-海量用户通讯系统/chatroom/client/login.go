@@ -48,6 +48,6 @@ func login(UserId int, UserPwd string) (err error) {
 		fmt.Println("conn.Write(bytes) fail err", err)
 		return
 	}
-	fmt.Println("客户端发送信息的长度ok")
+	fmt.Printf("客户端发送信息的长度=%d,内容是=%s\n", pkglen, string(data))
 	return
 }
