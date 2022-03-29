@@ -18,8 +18,8 @@ func login(UserId int, UserPwd string) (err error) {
 	defer conn.Close()
 
 	var mes message.Message
-	mes.Type = message.Login_Mes_Type
-	var loginMes message.Login_Message
+	mes.Type = message.Login_Mes_Type  //message 类型
+	var loginMes message.Login_Message //message 的data
 	loginMes.UserId = UserId
 	loginMes.UserPwd = UserPwd
 
@@ -40,7 +40,7 @@ func login(UserId int, UserPwd string) (err error) {
 	//将要发送的数据的长度先发送过去，告诉服务器接下来数据有多长，再发送数据
 	//服务端在接受到数据后，会判断数据是不是等于预期的长度，如果不一样，说明丢包，需要解决
 	var pkglen uint32 = uint32(len(data))
-	var buf [4]byte
+	var buf [4]byte //4字节的buf用来储存最多32位无符号位的数据
 	binary.BigEndian.PutUint32(buf[:4], pkglen)
 	//发送长度
 	n, err := conn.Write(buf[:4])

@@ -6,18 +6,18 @@ const (
 )
 
 type Message struct {
-	Type string //消息类型
-	Data string //消息数据
+	Type string `json:"type"` //消息类型
+	Data string `json:"data"` //消息数据
 }
 
 type Login_Message struct {
-	UserId   int
-	UserPwd  string
-	UserName string
+	UserId   int    `json:"userId"`
+	UserPwd  string `json:"userPwd"`
+	UserName string `json:"userName"`
 }
 
 //登陆返回的消息
 type Login_Response_Message struct {
-	Code  int   //状态码
-	Error error //错误的类型
+	Code  int   `json:"code"`  //状态码
+	Error error `json:"error"` //错误的类型
 }

@@ -9,11 +9,11 @@ import (
 func process(conn net.Conn) {
 	//等待客户端发送信息
 	defer conn.Close()
+	buf := make([]byte, 8096)
 	for {
-		buf := make([]byte, 8096)
 		fmt.Println("等待客户端发送的数据")
-		n, err := conn.Read(buf[:4])
-		if n != 4 || err != nil {
+		_, err := conn.Read(buf[:4]) //n是指读到了多少个字节
+		if err != nil {
 			fmt.Println("conn.Read() err=", err)
 			return
 		}
