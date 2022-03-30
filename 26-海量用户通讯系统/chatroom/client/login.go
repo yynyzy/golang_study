@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
+	"golang_study/26-海量用户通讯系统/chatroom/common/utils"
 	"net"
-	"time"
 )
 
 func login(UserId int, UserPwd string) (err error) {
@@ -57,7 +57,18 @@ func login(UserId int, UserPwd string) (err error) {
 		fmt.Println("conn.Write(data) fail err", err)
 		return
 	}
-	time.Sleep(time.Second * 5)
-	fmt.Println("客户端休眠了5s")
+	mes, err = utils.ReadPkg(conn)
+	if err != nil {
+		fmt.Println("readPkg(conn) err=", err)
+		return
+	}
+	//将mes的Data部分反序列化成LoginResMes
+	var loginResMes message.Login_Response_Message
+	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
+	if loginResMes.Code == 200 {
+		fmt.Println(" HKJ")
+	} else if loginResMes.Code == 500 {
+		fmt.Println(loginResMes.Error)
+	}
 	return
 }
