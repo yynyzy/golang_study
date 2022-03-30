@@ -37,14 +37,7 @@ func main() {
 		fmt.Println("请输入用户密码")
 		fmt.Scanln(&UserPwd)
 		fmt.Println("UserId=", UserId)
-		err := login(UserId, UserPwd)
-		if err != nil {
-			fmt.Println("用户登陆失败")
-			return
-		} else {
-			fmt.Println("用户登陆成功")
-
-		}
+		login(UserId, UserPwd)
 	} else if key == 2 {
 		fmt.Println("注册用户")
 	} else {

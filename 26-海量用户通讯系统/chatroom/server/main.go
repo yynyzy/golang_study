@@ -25,7 +25,10 @@ func process(conn net.Conn) {
 				return
 			}
 		}
-		fmt.Println("mes=", mes)
+		err = serverProcesMes(conn, &mes)
+		if err != nil {
+			return
+		}
 	}
 }
 
@@ -79,13 +82,11 @@ func serverProcessLogin(conn net.Conn, mes *message.Message) (err error) {
 		return
 	}
 	//4.将data赋值给resMes
-	fmt.Println("data", data)
-	fmt.Println("stringdata", string(data))
 	resMes.Data = string(data)
 	//5.对resMes 进行序列化，准备发送
 	data, err = json.Marshal(resMes)
 	if err != nil {
-		fmt.Println("json . Marshal fail", err)
+		fmt.Println("json.Marshal fail", err)
 		return
 	}
 	//6.发送
