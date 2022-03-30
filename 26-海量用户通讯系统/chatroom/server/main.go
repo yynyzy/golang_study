@@ -29,6 +29,41 @@ func process(conn net.Conn) {
 	}
 }
 
+//编写一个函数serverProcessLogin函数， 专门处理登录请求
+func serverprocessLogin(conn net.Conn, mes *message.Message) (err error) {
+	//核心代码...
+	//1. 先从mes中取出mes.Data ，并直接反序列化成LoginMes
+	var loginMes message.Login_Message
+	err = json.Unmarshal([]byte(mes.Data), &loginMes)
+	if err != nil {
+		fmt.Println("json. Unmarshal fail err=", err)
+		return
+	}
+	//如果用户id= 100,密码=123,认为合法，否则不合法
+	if loginMes.UserId == 100 && loginMes.UserPwd == "123456" {
+		//合法
+	} else {
+	}
+	return
+}
+
+//编写一个 ServerProcessMes 函数
+//功能:根据客户端发送消息种类不同，决定调用哪个函数来处理
+func serverProcesMes(conn net.Conn, mes *message.Message) (err error) {
+	switch mes.Type {
+	case message.Login_Mes_Type:
+		//处理登陆
+		fmt.Println("")
+	case message.Register_Mes_Type:
+		//处理注册
+		fmt.Println("")
+
+	default:
+		fmt.Println("消息类型不存在，无法处理")
+	}
+	return
+}
+
 func readPkg(conn net.Conn) (mes message.Message, err error) {
 	buf := make([]byte, 8096)
 	fmt.Println("读取客户端发送的数据")

@@ -3,6 +3,7 @@ package message
 const (
 	Login_Mes_Type     = "Login_Message"
 	Login_Res_Mes_Type = "Login_Response_Message"
+	Register_Mes_Type  = "Register_Message"
 )
 
 type Message struct {
@@ -20,4 +21,8 @@ type Login_Message struct {
 type Login_Response_Message struct {
 	Code  int   `json:"code"`  //状态码
 	Error error `json:"error"` //错误的类型
+}
+
+//登陆返回的消息
+type Register_Message struct {
 }
