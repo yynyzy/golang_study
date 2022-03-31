@@ -20,7 +20,7 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	var loginMes message.Login_Message
 	err = json.Unmarshal([]byte(mes.Data), &loginMes)
 	if err != nil {
-		fmt.Println("json. Unmarshal fail err=", err)
+		fmt.Println("json.Unmarshal fail err=", err)
 		return
 	}
 	//先声明一个 resMes

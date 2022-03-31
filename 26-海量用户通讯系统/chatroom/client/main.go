@@ -33,10 +33,9 @@ func main() {
 	if key == 1 {
 		//说明用户要登陆，输入用户id与密码
 		fmt.Println("请输入用户Id")
-		fmt.Scanf("%v\n", &UserId)
+		fmt.Scanln(&UserId)
 		fmt.Println("请输入用户密码")
 		fmt.Scanln(&UserPwd)
-		fmt.Println("UserId=", UserId)
 		login(UserId, UserPwd)
 	} else if key == 2 {
 		fmt.Println("注册用户")

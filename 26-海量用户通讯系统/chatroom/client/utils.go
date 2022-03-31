@@ -1,4 +1,4 @@
-package utils
+package main
 
 import (
 	"encoding/binary"
@@ -17,7 +17,6 @@ type Transfer struct {
 }
 
 func (this *Transfer) ReadPkg() (mes message.Message, err error) {
-	// buf := make([]byte, 8096)
 	fmt.Println("读取客户端发送的数据")
 	//conn.Read() 在conn没有关闭的情况下才会阻塞，如果客户端关闭要
 

@@ -13,12 +13,17 @@ func process(conn net.Conn) {
 	processor := &Processor{
 		Conn: conn,
 	}
-	processor.processRecive()
+	err := processor.processRecive()
+	if err != nil {
+		fmt.Println("客户端与服务端通讯协程错误 err=", err)
+		return
+	}
+
 }
 
 func main() {
-	fmt.Println("服务端监听8889端口")
-	listen, err := net.Listen("tcp", "localhost:8889")
+	fmt.Println("服务端[新的结构]监听8889端口")
+	listen, err := net.Listen("tcp", "0.0.0.0:8889")
 	if err != nil {
 		fmt.Println("net.Dial err=", err)
 		return

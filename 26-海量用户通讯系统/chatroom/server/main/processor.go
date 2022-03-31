@@ -18,11 +18,13 @@ type Processor struct {
 func (this *Processor) serverProcesMes(mes *message.Message) (err error) {
 	switch mes.Type {
 	case message.Login_Mes_Type:
+		fmt.Println("ServerProcessLogin start")
 		//处理登陆
 		up := &processes.UserProcess{
 			Conn: this.Conn,
 		}
 		err = up.ServerProcessLogin(mes)
+		fmt.Println("ServerProcessLogin err=", err)
 	case message.Register_Mes_Type:
 		//处理注册
 		fmt.Println("")
@@ -32,24 +34,23 @@ func (this *Processor) serverProcesMes(mes *message.Message) (err error) {
 	}
 	return
 }
-func (this *Processor) processRecive() {
+func (this *Processor) processRecive() (err error) {
 	for {
 		tf := &utils.Transfer{Conn: this.Conn}
 		mes, err := tf.ReadPkg()
 		if err != nil {
-			fmt.Println("readPkg err=", err)
 			if err == io.EOF {
 				fmt.Println("客户端退出,服务器此 connect 也正常关闭")
-				return
+				return err
 			} else {
-				fmt.Println("readPkg err=", err)
-				return
+				fmt.Println("readPkgaa err=", err)
+				return err
 			}
 		}
 
 		err = this.serverProcesMes(&mes)
 		if err != nil {
-			return
+			return err
 		}
 	}
 }

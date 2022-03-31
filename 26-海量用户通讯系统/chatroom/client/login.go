@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
-	"golang_study/26-海量用户通讯系统/chatroom/server/utils"
 	"net"
 )
 
@@ -57,7 +56,7 @@ func login(UserId int, UserPwd string) (err error) {
 		fmt.Println("conn.Write(data) fail err", err)
 		return
 	}
-	tf := &utils.Transfer{Conn: conn}
+	tf := &Transfer{Conn: conn}
 	mes, err = tf.ReadPkg()
 	if err != nil {
 		fmt.Println("readPkg(conn) err=", err)
