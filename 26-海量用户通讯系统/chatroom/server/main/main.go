@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"golang_study/26-海量用户通讯系统/chatroom/common/message"
 	"golang_study/26-海量用户通讯系统/chatroom/server/utils"
 	"io"
 	"net"
@@ -13,7 +12,8 @@ func process(conn net.Conn) {
 	//等待客户端发送信息
 	defer conn.Close()
 	for {
-		mes, err := utils.ReadPkg(conn)
+		tf := &utils.Transfer{Conn: conn}
+		mes, err := tf.ReadPkg()
 		if err != nil {
 			fmt.Println("readPkg err=", err)
 			if err == io.EOF {
@@ -24,28 +24,14 @@ func process(conn net.Conn) {
 				return
 			}
 		}
-		err = serverProcesMes(conn, &mes)
+		p := &Processor{
+			Conn: conn,
+		}
+		err = p.ServerProcesMes(&mes)
 		if err != nil {
 			return
 		}
 	}
-}
-
-//编写一个 ServerProcessMes 函数
-//功能:根据客户端发送消息种类不同，决定调用哪个函数来处理
-func serverProcesMes(conn net.Conn, mes *message.Message) (err error) {
-	switch mes.Type {
-	case message.Login_Mes_Type:
-		//处理登陆
-		err = serverProcessLogin(conn, mes)
-	case message.Register_Mes_Type:
-		//处理注册
-		fmt.Println("")
-
-	default:
-		fmt.Println("消息类型不存在，无法处理")
-	}
-	return
 }
 
 func main() {

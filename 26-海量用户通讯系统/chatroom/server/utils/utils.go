@@ -9,33 +9,19 @@ import (
 	"net"
 )
 
-func WritePkg(conn net.Conn, data []byte) (err error) {
-	var pkglen uint32 = uint32(len(data))
-	var buf [4]byte //4字节的buf用来储存最多32位无符号位的数据
-	binary.BigEndian.PutUint32(buf[:4], pkglen)
-	//发送长度
-	n, err := conn.Write(buf[:4])
-	if n != 4 || err != nil {
-		err = errors.New("conn.Write(bytes) fail err")
-		return
-	}
-	// fmt.Printf("客户端发送信息的长度=%d,内容是=%s\n", pkglen, string(data))
-
-	//发送消息本身
-	n, err = conn.Write(data)
-	if n != int(pkglen) || err != nil {
-		err = errors.New("conn.Write(data) fail err")
-		return
-	}
-	return
+//这里将这些方法关联到结构体中
+type Transfer struct {
+	// 分析它应该有哪些字段
+	Conn net.Conn
+	Buf  [8096]byte //正式传输时，使用缓冲
 }
 
-func ReadPkg(conn net.Conn) (mes message.Message, err error) {
+func (this *Transfer) ReadPkg() (mes message.Message, err error) {
 	buf := make([]byte, 8096)
 	fmt.Println("读取客户端发送的数据")
 	//conn.Read() 在conn没有关闭的情况下才会阻塞，如果客户端关闭要
 
-	_, err = conn.Read(buf[:4]) //读取消息的头四个字节，获取应得到的长度
+	_, err = this.Conn.Read(this.Buf[:4]) //读取消息的头四个字节，获取应得到的长度
 	//这里的buf[:4] 是指：从 conn套接字中读取了 4个字节的数据到 buf中
 	//返回的n是指读到了多少个字节
 	if err != nil {
@@ -46,7 +32,7 @@ func ReadPkg(conn net.Conn) (mes message.Message, err error) {
 	var pkglen uint32 = binary.BigEndian.Uint32(buf[0:4])
 
 	//根据  从套接字中读取 pkglen 长度的数据到 buf 中去
-	n, err := conn.Read(buf[:pkglen])
+	n, err := this.Conn.Read(this.Buf[:pkglen])
 	if n != int(pkglen) || err != nil {
 		return
 	}
@@ -57,5 +43,25 @@ func ReadPkg(conn net.Conn) (mes message.Message, err error) {
 		return
 	}
 
+	return
+}
+
+func (this *Transfer) WritePkg(data []byte) (err error) {
+	var pkglen uint32 = uint32(len(data))
+	binary.BigEndian.PutUint32(this.Buf[:4], pkglen)
+	//发送长度
+	n, err := this.Conn.Write(this.Buf[:4])
+	if n != 4 || err != nil {
+		err = errors.New("conn.Write(bytes) fail err")
+		return
+	}
+	// fmt.Printf("客户端发送信息的长度=%d,内容是=%s\n", pkglen, string(data))
+
+	//发送消息本身
+	n, err = this.Conn.Write(data)
+	if n != int(pkglen) || err != nil {
+		err = errors.New("conn.Write(data) fail err")
+		return
+	}
 	return
 }
