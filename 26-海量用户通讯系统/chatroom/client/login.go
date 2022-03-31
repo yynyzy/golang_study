@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
-	"golang_study/26-海量用户通讯系统/chatroom/common/utils"
+	"golang_study/26-海量用户通讯系统/chatroom/server/utils"
 	"net"
 )
 
@@ -62,7 +62,9 @@ func login(UserId int, UserPwd string) (err error) {
 		fmt.Println("readPkg(conn) err=", err)
 		return
 	}
-	//将mes的Data部分反序列化成LoginResMes
+
+	//将 mes 的Data部分反序列化成LoginResMes
+	//服务端向客户端返回一个响应消息
 	var loginResMes message.Login_Response_Message
 	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
 	if loginResMes.Code == 200 {
