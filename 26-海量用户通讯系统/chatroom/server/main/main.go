@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"golang_study/26-海量用户通讯系统/chatroom/server/utils"
-	"io"
 	"net"
 )
 
@@ -11,27 +9,11 @@ import (
 func process(conn net.Conn) {
 	//等待客户端发送信息
 	defer conn.Close()
-	for {
-		tf := &utils.Transfer{Conn: conn}
-		mes, err := tf.ReadPkg()
-		if err != nil {
-			fmt.Println("readPkg err=", err)
-			if err == io.EOF {
-				fmt.Println("客户端退出,服务器此 connect 也正常关闭")
-				return
-			} else {
-				fmt.Println("readPkg err=", err)
-				return
-			}
-		}
-		p := &Processor{
-			Conn: conn,
-		}
-		err = p.ServerProcesMes(&mes)
-		if err != nil {
-			return
-		}
+	//这里调用主控，创建一个process实例
+	processor := &Processor{
+		Conn: conn,
 	}
+	processor.processRecive()
 }
 
 func main() {

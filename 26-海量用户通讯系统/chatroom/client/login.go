@@ -57,7 +57,8 @@ func login(UserId int, UserPwd string) (err error) {
 		fmt.Println("conn.Write(data) fail err", err)
 		return
 	}
-	mes, err = utils.ReadPkg(conn)
+	tf := &utils.Transfer{Conn: conn}
+	mes, err = tf.ReadPkg()
 	if err != nil {
 		fmt.Println("readPkg(conn) err=", err)
 		return
