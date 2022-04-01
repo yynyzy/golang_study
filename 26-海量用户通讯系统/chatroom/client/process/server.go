@@ -2,6 +2,8 @@ package process
 
 import (
 	"fmt"
+	"golang_study/26-海量用户通讯系统/chatroom/client/utils"
+	"net"
 	"os"
 )
 
@@ -27,5 +29,22 @@ func showMenu() {
 	default:
 		fmt.Println("你输入的选项不正确")
 
+	}
+}
+
+//和服务器保持通讯，接受服务器推送的消息
+func serverProcessMes(Conn net.Conn) {
+	//创建一个 Transfer 实例，不停的读取服务器发送的信息
+	tf := &utils.Transfer{Conn: Conn}
+
+	for {
+		fmt.Println("客户端正在读取服务器推送的信息")
+		mes, err := tf.ReadPkg()
+		if err != nil {
+			fmt.Println("tf.ReadPkg() err=", err)
+			return
+		}
+		//如果读取到消息，进行进行下一步逻辑
+		fmt.Println("mes=%v", mes)
 	}
 }
