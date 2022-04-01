@@ -12,7 +12,7 @@ import (
 type UserProcess struct {
 }
 
-func (this *UserProcess) login(UserId int, UserPwd string) (err error) {
+func (this *UserProcess) Login(UserId int, UserPwd string) (err error) {
 
 	conn, err := net.Dial("tcp", "localhost:8889") //连接到服务端
 	if err != nil {
@@ -73,6 +73,10 @@ func (this *UserProcess) login(UserId int, UserPwd string) (err error) {
 	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
 	if loginResMes.Code == 200 {
 		fmt.Println("登陆成功")
+		//显示我们的登陆成功菜单
+		for {
+			showMenu()
+		}
 	} else if loginResMes.Code == 500 {
 		fmt.Println(loginResMes.Error)
 	}
