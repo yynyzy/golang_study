@@ -1,14 +1,18 @@
-package main
+package process
 
 import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"golang_study/26-海量用户通讯系统/chatroom/client/utils"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
 	"net"
 )
 
-func login(UserId int, UserPwd string) (err error) {
+type UserProcess struct {
+}
+
+func (this *UserProcess) login(UserId int, UserPwd string) (err error) {
 
 	conn, err := net.Dial("tcp", "localhost:8889") //连接到服务端
 	if err != nil {
@@ -56,7 +60,7 @@ func login(UserId int, UserPwd string) (err error) {
 		fmt.Println("conn.Write(data) fail err", err)
 		return
 	}
-	tf := &Transfer{Conn: conn}
+	tf := &utils.Transfer{Conn: conn}
 	mes, err = tf.ReadPkg()
 	if err != nil {
 		fmt.Println("readPkg(conn) err=", err)
