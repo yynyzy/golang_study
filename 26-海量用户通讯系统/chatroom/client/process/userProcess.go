@@ -52,7 +52,7 @@ func (this *UserProcess) Login(UserId int, UserPwd string) (err error) {
 		fmt.Println("conn.Write(bytes) fail err", err)
 		return
 	}
-	// fmt.Printf("客户端发送信息的长度=%d,内容是=%s\n", pkglen, string(data))
+	fmt.Printf("客户端发送信息的长度=%d,内容是=%s\n", pkglen, string(data))
 
 	//发送消息本身
 	_, err = conn.Write(data)
@@ -66,7 +66,6 @@ func (this *UserProcess) Login(UserId int, UserPwd string) (err error) {
 		fmt.Println("readPkg(conn) err=", err)
 		return
 	}
-
 	//将 mes 的Data部分反序列化成LoginResMes
 	//服务端向客户端返回一个响应消息
 	var loginResMes message.Login_Response_Message

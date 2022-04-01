@@ -18,13 +18,11 @@ type Processor struct {
 func (this *Processor) serverProcesMes(mes *message.Message) (err error) {
 	switch mes.Type {
 	case message.Login_Mes_Type:
-		fmt.Println("ServerProcessLogin start")
 		//处理登陆
 		up := &processes.UserProcess{
 			Conn: this.Conn,
 		}
 		err = up.ServerProcessLogin(mes)
-		fmt.Println("ServerProcessLogin err=", err)
 	case message.Register_Mes_Type:
 		//处理注册
 		fmt.Println("")
