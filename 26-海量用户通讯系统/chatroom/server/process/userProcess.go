@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
+	"golang_study/26-海量用户通讯系统/chatroom/server/model"
 	"golang_study/26-海量用户通讯系统/chatroom/server/utils"
 	"net"
 )
@@ -30,14 +31,20 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	//再声明一个 loginResMes
 	var loginResMes message.Login_Response_Message
 
-	//如果用户id= 100,密码=123,认为合法，否则不合法
-	if loginMes.UserId == 100 && loginMes.UserPwd == "123456" {
-		//合法
-		loginResMes.Code = 200
+	//我们需要到redis数据库去验证
+	user, err := model.MyUserDao.Login(loginMes.UserId, loginMes.UserPwd)
+	if err != nil {
+		if err == model.ERROR_USER_NOT_EXISTS {
+			loginResMes.Code = 500
+		} else if err == model.ERROR_USER_PWD {
+			loginResMes.Code = 403
+		} else {
+			loginResMes.Code = 505
+			fmt.Println("服务器内部发生错误...")
+		}
 	} else {
-		//不合法,返回500
-		loginResMes.Code = 500
-		loginResMes.Error = "该用户不存在，请注册后再登陆..."
+		loginResMes.Code = 200
+		fmt.Println(user, "登陆成功")
 	}
 	//3将loginResMes 序列化
 	data, err := json.Marshal(loginResMes)

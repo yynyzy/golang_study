@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"golang_study/26-海量用户通讯系统/chatroom/server/model"
 	"net"
+	"time"
 )
 
 //处理和客户端的通信
@@ -21,7 +23,16 @@ func process(conn net.Conn) {
 
 }
 
+//此函数完成对 UserDao的初始化
+func initUserDao() {
+	//pool是一个全局变量，所以可以使用
+	model.MyUserDao = model.NewUserDao(pool)
+}
 func main() {
+	//在服务器一开始就创建一个 redis链接池
+	initPool("0.0.0.0:8889", 16, 0, 300*time.Second)
+	//注意要在初始化链接池后 再创建 UserDao实例
+	initUserDao()
 	fmt.Println("服务端[新的结构]监听8889端口")
 	listen, err := net.Listen("tcp", "0.0.0.0:8889")
 	if err != nil {

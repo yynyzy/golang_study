@@ -39,12 +39,4 @@ func main() {
 			fmt.Println("请输入正确的序号")
 		}
 	}
-	// if key == 1 {
-	// 	//说明用户要登陆，输入用户id与密码
-
-	// } else if key == 2 {
-	// 	fmt.Println("注册用户")
-	// } else {
-	// 	fmt.Println("退出系统")
-	// }
 }
