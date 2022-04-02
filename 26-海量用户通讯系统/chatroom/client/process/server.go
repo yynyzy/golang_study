@@ -45,6 +45,6 @@ func serverProcessMes(Conn net.Conn) {
 			return
 		}
 		//如果读取到消息，进行进行下一步逻辑
-		fmt.Println("mes=%v", mes)
+		fmt.Printf("mes=%v", mes)
 	}
 }

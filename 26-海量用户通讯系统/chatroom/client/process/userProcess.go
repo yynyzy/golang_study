@@ -77,10 +77,9 @@ func (this *UserProcess) Login(UserId int, UserPwd string) (err error) {
 		go serverProcessMes(conn)
 		//1.显示我们的登录成功的菜单[循环]..
 		for {
-
 			showMenu()
 		}
-	} else if loginResMes.Code == 500 {
+	} else {
 		fmt.Println(loginResMes.Error)
 	}
 	return

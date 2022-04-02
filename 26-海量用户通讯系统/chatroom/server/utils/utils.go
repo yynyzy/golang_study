@@ -31,7 +31,7 @@ func (this *Transfer) ReadPkg() (mes message.Message, err error) {
 	//根据 buf[:4] 转成一个 uint32类型
 	var pkglen uint32 = binary.BigEndian.Uint32(this.Buf[0:4])
 
-	//根据  从套接字中读取 pkglen 长度的数据到 buf 中去
+	//根据 从套接字中读取 pkglen 长度的数据到 buf 中去
 	n, err := this.Conn.Read(this.Buf[:pkglen])
 	if n != int(pkglen) || err != nil {
 		return

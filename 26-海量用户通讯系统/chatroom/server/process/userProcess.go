@@ -31,13 +31,17 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	//再声明一个 loginResMes
 	var loginResMes message.Login_Response_Message
 
-	//我们需要到redis数据库去验证
+	//我们需要到redis数据库去验证，用户身份是否合法
+
 	user, err := model.MyUserDao.Login(loginMes.UserId, loginMes.UserPwd)
 	if err != nil {
 		if err == model.ERROR_USER_NOT_EXISTS {
 			loginResMes.Code = 500
+			loginResMes.Error = err.Error()
 		} else if err == model.ERROR_USER_PWD {
 			loginResMes.Code = 403
+			loginResMes.Error = err.Error()
+
 		} else {
 			loginResMes.Code = 505
 			fmt.Println("服务器内部发生错误...")

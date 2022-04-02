@@ -26,7 +26,9 @@ func NewUserDao(pool *redis.Pool) (userDao *UserDao) {
 
 //1.根据用户id 返回一个 用户实例+err
 func (this *UserDao) getUserById(conn redis.Conn, id int) (user *User, err error) {
-	res, err := redis.String(conn.Do("HGET", "user", "id"))
+
+	res, err := redis.String(conn.Do("HGet", "users", id))
+
 	if err != nil {
 		if err == redis.ErrNil {
 			//表示在 user 哈希中，没有找到对应的 id
@@ -46,6 +48,7 @@ func (this *UserDao) getUserById(conn redis.Conn, id int) (user *User, err error
 func (this *UserDao) Login(userId int, userPwd string) (user *User, err error) {
 	//从链接池中取一个链接
 	conn := this.pool.Get()
+
 	defer conn.Close() //关闭这个连接
 	//用此链接调用函数判断用户是否存在
 	user, err = this.getUserById(conn, userId)

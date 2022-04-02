@@ -30,7 +30,7 @@ func initUserDao() {
 }
 func main() {
 	//在服务器一开始就创建一个 redis链接池
-	initPool("0.0.0.0:8889", 16, 0, 300*time.Second)
+	initPool("localhost:6379", 16, 0, 300*time.Second)
 	//注意要在初始化链接池后 再创建 UserDao实例
 	initUserDao()
 	fmt.Println("服务端[新的结构]监听8889端口")
