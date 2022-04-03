@@ -22,7 +22,7 @@ func (this *UserProcess) Register(UserId int, UserPwd string, UserName string) (
 	defer conn.Close()
 
 	var mes message.Message
-	mes.Type = message.Register_Res_Mes_Type //message 类型
+	mes.Type = message.Register_Mes_Type     //message 类型
 	var RegisterMes message.Register_Message //message 的data
 	RegisterMes.User.UserId = UserId
 	RegisterMes.User.UserPwd = UserPwd

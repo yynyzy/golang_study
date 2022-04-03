@@ -3,6 +3,7 @@ package model
 import (
 	"encoding/json"
 	"fmt"
+	"golang_study/26-海量用户通讯系统/chatroom/common/message"
 
 	"github.com/garyburd/redigo/redis"
 )
@@ -61,7 +62,7 @@ func (this *UserDao) Login(userId int, userPwd string) (user *User, err error) {
 	}
 	return
 }
-func (this *UserDao) Register(user *User) (err error) {
+func (this *UserDao) Register(user *message.User) (err error) {
 	//从链接池中取一个链接
 	conn := this.pool.Get()
 
