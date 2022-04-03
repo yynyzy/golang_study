@@ -7,9 +7,63 @@ import (
 	"golang_study/26-海量用户通讯系统/chatroom/client/utils"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
 	"net"
+	"os"
 )
 
 type UserProcess struct {
+}
+
+func (this *UserProcess) Register(UserId int, UserPwd string, UserName string) (err error) {
+	conn, err := net.Dial("tcp", "localhost:8889") //连接到服务端
+	if err != nil {
+		fmt.Println("net.Dial err=", err)
+		return
+	}
+	defer conn.Close()
+
+	var mes message.Message
+	mes.Type = message.Register_Res_Mes_Type //message 类型
+	var RegisterMes message.Register_Message //message 的data
+	RegisterMes.User.UserId = UserId
+	RegisterMes.User.UserPwd = UserPwd
+	RegisterMes.User.UserName = UserName
+
+	//将 loginMes 序列化
+	data, err := json.Marshal(RegisterMes)
+	if err != nil {
+		fmt.Println("json.Marshal(RegisterMes) err=", err)
+		return
+	}
+	//把data 赋值给 mes.Data 字段
+	mes.Data = string(data)
+	data, err = json.Marshal(mes)
+	if err != nil {
+		fmt.Println("json.Marshal err=", err)
+		return
+	}
+	tf := &utils.Transfer{Conn: conn}
+	err = tf.WritePkg(data)
+	if err != nil {
+		fmt.Println("Register WritePkg(data) err=", err)
+		return
+	}
+	mes, err = tf.ReadPkg()
+	if err != nil {
+		fmt.Println("Register ReadPkg err=", err)
+		return
+	}
+	//将 mes 的Data部分反序列化成 RegisterResMes
+	//服务端向客户端返回一个响应消息
+	var RegisterResMes message.Register_Response_Message
+	err = json.Unmarshal([]byte(mes.Data), &RegisterResMes)
+	if RegisterResMes.Code == 200 {
+		fmt.Println("注册成功，请重新登陆")
+		os.Exit(0)
+	} else {
+		fmt.Println(RegisterResMes.Error)
+		os.Exit(0)
+	}
+	return
 }
 
 func (this *UserProcess) Login(UserId int, UserPwd string) (err error) {
@@ -30,7 +84,7 @@ func (this *UserProcess) Login(UserId int, UserPwd string) (err error) {
 	//将 loginMes 序列化
 	data, err := json.Marshal(loginMes)
 	if err != nil {
-		fmt.Println("json.Marshal err=", err)
+		fmt.Println("json.Marshal(loginMes) err=", err)
 		return
 	}
 	//把data 赋值给 mes.Data 字段

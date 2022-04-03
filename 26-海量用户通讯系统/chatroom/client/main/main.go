@@ -7,6 +7,7 @@ import (
 
 var UserId int
 var UserPwd string
+var UserName string
 
 func main() {
 	loop := true
@@ -30,7 +31,16 @@ func main() {
 			up.Login(UserId, UserPwd)
 			// loop = false
 		case 2:
-			fmt.Println("注册用户")
+			fmt.Println("进行用户注册")
+			fmt.Println("请输入注册用户Id")
+			fmt.Scanln(&UserId)
+			fmt.Println("请输入注册用户密码")
+			fmt.Scanln(&UserPwd)
+			fmt.Println("请输入注册用户昵称")
+			fmt.Scanln(&UserName)
+			var up = &process.UserProcess{}
+			up.Register(UserId, UserPwd, UserName)
+
 			// loop = false
 		case 3:
 			fmt.Println("退出系统")
