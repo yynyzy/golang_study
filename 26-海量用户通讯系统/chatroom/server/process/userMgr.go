@@ -2,12 +2,13 @@ package processes
 
 import "fmt"
 
+// 定义一个 UserMgr，用来维护在线用户列表
+// 因为 UserMgr实例在整个服务端只有一个
+// 需要在全局使用，所以设为全局
 var (
 	userMgr *UserMgr
 )
 
-// 定义一个 UserMgr，用来维护在线用户列表
-//因为整个服务端只维护一个列表，需要在全局使用，所以设为全局
 type UserMgr struct {
 	onlineUsers map[int]*UserProcess
 }
