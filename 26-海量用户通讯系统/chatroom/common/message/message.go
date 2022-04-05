@@ -20,9 +20,9 @@ type Login_Message struct {
 
 //登陆返回的消息
 type Login_Response_Message struct {
-	Code   int    `json:"code"` //状态码
-	UserId []int  //保存用户Id的切片
-	Error  string `json:"error"` //错误的类型
+	Code    int    `json:"code"` //状态码
+	UsersId []int  //保存用户Id的切片
+	Error   string `json:"error"` //错误的类型
 }
 
 //登陆返回的消息

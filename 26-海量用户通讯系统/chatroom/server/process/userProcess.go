@@ -57,7 +57,7 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 		//将当前在线用户的id 放入到loginResMes.UsersId
 		//遍历 userMgr.onlineUsers
 		for id, _ := range userMgr.onlineUsers {
-			loginResMes.UserId = append(loginResMes.UserId, id)
+			loginResMes.UsersId = append(loginResMes.UsersId, id)
 		}
 
 		fmt.Println(user, "登陆成功")
