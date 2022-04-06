@@ -45,7 +45,7 @@ func (this *Processor) processRecive() (err error) {
 				fmt.Println("客户端退出,服务器此 connect 也正常关闭")
 				return err
 			} else {
-				fmt.Println("readPkgaa err=", err)
+				fmt.Println("readPkg err=", err)
 				return err
 			}
 		}

@@ -51,6 +51,7 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 		loginResMes.Code = 200
 		//这里登陆成功，将活跃用户放入 onlineUsers 中
 		//将 客户端传递过来的 UserId 赋值给 UserProcess
+		this.UserId = loginMes.UserId
 		userMgr.AddOnlineUsers(this)
 		this.UserId = loginMes.UserId
 
