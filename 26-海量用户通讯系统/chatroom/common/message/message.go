@@ -1,10 +1,11 @@
 package message
 
 const (
-	Login_Mes_Type        = "Login_Message"
-	Login_Res_Mes_Type    = "Login_Response_Message"
-	Register_Mes_Type     = "Register_Message"
-	Register_Res_Mes_Type = "Register_Response_Message"
+	Login_Mes_Type              = "Login_Message"
+	Login_Res_Mes_Type          = "Login_Response_Message"
+	Register_Mes_Type           = "Register_Message"
+	Register_Res_Mes_Type       = "Register_Response_Message"
+	Notify_User_Status_Mes_Type = "Notify_User_Status_Mes"
 )
 
 type Message struct {
@@ -33,4 +34,10 @@ type Register_Message struct {
 type Register_Response_Message struct {
 	Code  int    `json:"code"`  //状态码400表示用户已占有，200表示注册成功
 	Error string `json:"error"` //错误的类型
+}
+
+//为了配合服务器推送用户状态变化的字段
+type Notify_User_Status_Mes struct {
+	UserId int `json:"userId"`
+	Status int `json:"status"`
 }
