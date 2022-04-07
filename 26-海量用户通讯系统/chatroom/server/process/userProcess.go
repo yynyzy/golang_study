@@ -15,6 +15,50 @@ type UserProcess struct {
 	UserId int
 }
 
+//这里我们编写通知所有在线的用户的方法
+//userId 要通知其它的在线用户，我上线
+func (this *UserProcess) NotifyotherOnlineUsers(userId int) {
+	//遍历onlineUsers, 然后一个一个的发送NotifyUserstatusMes
+	for id, up := range userMgr.onlineUsers {
+		//过滤到自己
+		if id == userId {
+			continue
+		}
+		//开始通知[单独的写一个方法]
+		up.NotifyMeOline(id)
+	}
+}
+func (this *UserProcess) NotifyMeOline(userId int) {
+	var mes message.Message
+	mes.Type = message.Notify_User_Status_Mes_Type
+
+	var notifyUserStatusMes message.Notify_User_Status_Mes
+	notifyUserStatusMes.UserId = userId
+	notifyUserStatusMes.Status = message.UserOline
+
+	data, err := json.Marshal(notifyUserStatusMes)
+	if err != nil {
+		fmt.Println("json.Marshal fail err=", err)
+		return
+	}
+	mes.Data = string(data)
+	data, err = json.Marshal(mes)
+	if err != nil {
+		fmt.Println("json.Marshal fail err=", err)
+		return
+	}
+
+	tf := &utils.Transfer{
+		Conn: this.Conn,
+	}
+
+	tf.WritePkg(data)
+	if err != nil {
+		fmt.Println("tf.WritePkg(data) fail err=", err)
+		return
+	}
+}
+
 //编写一个函数serverProcessLogin函数， 专门处理登录请求
 func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	//核心代码...

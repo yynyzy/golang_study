@@ -8,6 +8,13 @@ const (
 	Notify_User_Status_Mes_Type = "Notify_User_Status_Mes"
 )
 
+//定义几个用户状态常量
+const (
+	UserOline = iota
+	UserOffline
+	UserBusyStatus
+)
+
 type Message struct {
 	Type string `json:"type"` //消息类型
 	Data string `json:"data"` //消息数据
