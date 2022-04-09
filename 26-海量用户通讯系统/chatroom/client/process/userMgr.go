@@ -29,5 +29,5 @@ func updateUsersStatus(Notify_User_Status_Mes *message.Notify_User_Status_Mes) {
 	}
 	user.UserStatus = Notify_User_Status_Mes.Status
 	onlineUsers[Notify_User_Status_Mes.UserId] = user
-	fmt.Println("updateUsersStatus Map=", onlineUsers)
+	outputonlineUser()
 }
