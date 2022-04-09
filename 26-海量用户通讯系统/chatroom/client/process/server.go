@@ -3,6 +3,7 @@ package process
 import (
 	"fmt"
 	"golang_study/26-海量用户通讯系统/chatroom/client/utils"
+	"golang_study/26-海量用户通讯系统/chatroom/common/message"
 	"net"
 	"os"
 )
@@ -43,6 +44,13 @@ func serverProcessMes(Conn net.Conn) {
 		if err != nil {
 			fmt.Println("tf.ReadPkg() err=", err)
 			return
+		}
+		switch mes.Type {
+		case message.Notify_User_Status_Mes_Type:
+			//1.有用户上线的消息推送
+			//2.把这个用户的消息状态保存到客户端的 map[int]User 中
+		default:
+			fmt.Println("服务端返回了未知的消息类型")
 		}
 		//如果读取到消息，进行进行下一步逻辑
 		fmt.Printf("mes=%v", mes)

@@ -10,7 +10,7 @@ const (
 
 //定义几个用户状态常量
 const (
-	UserOline = iota
+	UserOnline = iota
 	UserOffline
 	UserBusyStatus
 )

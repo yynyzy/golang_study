@@ -34,7 +34,7 @@ func (this *UserProcess) NotifyMeOline(userId int) {
 
 	var notifyUserStatusMes message.Notify_User_Status_Mes
 	notifyUserStatusMes.UserId = userId
-	notifyUserStatusMes.Status = message.UserOline
+	notifyUserStatusMes.Status = message.UserOnline
 
 	data, err := json.Marshal(notifyUserStatusMes)
 	if err != nil {
@@ -97,7 +97,9 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 		//将 客户端传递过来的 UserId 赋值给 UserProcess
 		this.UserId = loginMes.UserId
 		userMgr.AddOnlineUsers(this)
-		this.UserId = loginMes.UserId
+
+		//通知其他的在线用户
+		this.NotifyotherOnlineUsers(this.UserId)
 
 		//将当前在线用户的id 放入到loginResMes.UsersId
 		//遍历 userMgr.onlineUsers
