@@ -25,7 +25,7 @@ func (this *UserProcess) NotifyotherOnlineUsers(userId int) {
 			continue
 		}
 		//开始通知[单独的写一个方法]
-		up.NotifyMeOline(id)
+		up.NotifyMeOline(userId)
 	}
 }
 func (this *UserProcess) NotifyMeOline(userId int) {
@@ -42,6 +42,7 @@ func (this *UserProcess) NotifyMeOline(userId int) {
 		return
 	}
 	mes.Data = string(data)
+
 	data, err = json.Marshal(mes)
 	if err != nil {
 		fmt.Println("json.Marshal fail err=", err)
@@ -96,8 +97,9 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 		//这里登陆成功，将活跃用户放入 onlineUsers 中
 		//将 客户端传递过来的 UserId 赋值给 UserProcess
 		this.UserId = loginMes.UserId
+		fmt.Println("loginMes.UserId=", loginMes.UserId)
 		userMgr.AddOnlineUsers(this)
-
+		fmt.Println("userMgr=", userMgr)
 		//通知其他的在线用户
 		this.NotifyotherOnlineUsers(this.UserId)
 

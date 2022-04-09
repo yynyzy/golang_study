@@ -1,6 +1,7 @@
 package process
 
 import (
+	"encoding/json"
 	"fmt"
 	"golang_study/26-海量用户通讯系统/chatroom/client/utils"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
@@ -19,7 +20,7 @@ func showMenu() {
 	fmt.Scanf("%d\n", &key)
 	switch key {
 	case 1:
-		fmt.Println("显示在线用户列表-")
+		outputonlineUser()
 	case 2:
 		fmt.Println("发送消息")
 	case 3:
@@ -45,10 +46,14 @@ func serverProcessMes(Conn net.Conn) {
 			fmt.Println("tf.ReadPkg() err=", err)
 			return
 		}
+
 		switch mes.Type {
 		case message.Notify_User_Status_Mes_Type:
 			//1.有用户上线的消息推送
-			//2.把这个用户的消息状态保存到客户端的 map[int]User 中
+			//2.把这个用户的消息状态更新到客户端的 map[int]User 中
+			var notifyUserStatusMes message.Notify_User_Status_Mes
+			json.Unmarshal([]byte(mes.Data), &notifyUserStatusMes)
+			updateUsersStatus(&notifyUserStatusMes)
 		default:
 			fmt.Println("服务端返回了未知的消息类型")
 		}
