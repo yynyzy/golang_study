@@ -125,6 +125,10 @@ func (this *UserProcess) Login(UserId int, UserPwd string) (err error) {
 	var loginResMes message.Login_Response_Message
 	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
 	if loginResMes.Code == 200 {
+		//登陆成功初始化 CurUser
+		CurUser.Conn = conn
+		CurUser.UserId = UserId
+		CurUser.UserStatus = message.UserOnline
 
 		//可以显示当前在线用户列表,遍历loginResMes.UserId
 		fmt.Println("当前在线用户列表如下:")
@@ -144,8 +148,6 @@ func (this *UserProcess) Login(UserId int, UserPwd string) (err error) {
 		//该协程保持和服务器端的通讯.如果服务器有数据推送给客户端
 		//则接收并显示在客户端的终端.
 		go serverProcessMes(conn)
-
-		// switch
 
 		//1.显示我们的登录成功的菜单[循环]..
 		for {
