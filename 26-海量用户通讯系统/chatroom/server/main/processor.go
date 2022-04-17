@@ -30,7 +30,8 @@ func (this *Processor) serverProcesMes(mes *message.Message) (err error) {
 			Conn: this.Conn,
 		}
 		err = up.ServerProcessRegister(mes)
-
+	case message.SmsMes_Type:
+		//创建一个 SmsProcess 实例
 	default:
 		fmt.Println("消息类型不存在，无法处理")
 	}
