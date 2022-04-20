@@ -3,6 +3,7 @@ package processes
 import (
 	"encoding/json"
 	"fmt"
+	"golang_study/26-海量用户通讯系统/chatroom/common/message"
 )
 
 type SmsProcess struct {
@@ -23,7 +24,7 @@ func (this *SmsProcess) SendGroupMessage(mes message.Message) {
 		if id == smsMes.UserId {
 			continue
 		}
-		this.SendToeachUser(smsMes.content, up.Conn)
+		this.SendToeachUser(smsMes.Content, up.Conn)
 	}
 }
 
