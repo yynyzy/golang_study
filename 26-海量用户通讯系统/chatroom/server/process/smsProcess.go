@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
 	"golang_study/26-海量用户通讯系统/chatroom/server/utils"
+	"net"
 )
 
 type SmsProcess struct {
@@ -36,7 +37,7 @@ func (this *SmsProcess) SendGroupMessage(mes message.Message) {
 	}
 }
 
-func (this *SmsProcess) SendToeachUser(data []byte, conn Conn.net) {
+func (this *SmsProcess) SendToeachUser(data []byte, conn net.Conn) {
 	tf := &utils.Transfer{
 		Conn: conn,
 	}
