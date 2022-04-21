@@ -53,5 +53,5 @@ type Notify_User_Status_Mes struct {
 //发送的消息
 type SmsMes struct {
 	Content string `json:"content"`
-	User           //匿名结构体 User下的User
+	User    User   `json:"user"` //匿名结构体 User下的User
 }

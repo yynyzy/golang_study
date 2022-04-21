@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
+	"golang_study/26-海量用户通讯系统/chatroom/server/utils"
 )
 
 type SmsProcess struct {
@@ -20,14 +21,27 @@ func (this *SmsProcess) SendGroupMessage(mes message.Message) {
 		fmt.Println("json.Unmarshal err=", err)
 		return
 	}
+
+	data, err := json.Marshal(mes)
+	if err != nil {
+		fmt.Println("json.Marshal err=", err)
+		return
+	}
+
 	for id, up := range userMgr.onlineUsers {
 		if id == smsMes.UserId {
 			continue
 		}
-		this.SendToeachUser(smsMes.Content, up.Conn)
+		this.SendToeachUser(data, up.Conn)
 	}
 }
 
-func (this *SmsProcess) SendToeachUser(info string, conn Conn.net) {
-
+func (this *SmsProcess) SendToeachUser(data []byte, conn Conn.net) {
+	tf := &utils.Transfer{
+		Conn: conn,
+	}
+	err := tf.WritePkg(data)
+	if err != nil {
+		fmt.Println("转发消息失败 err=", err)
+	}
 }
