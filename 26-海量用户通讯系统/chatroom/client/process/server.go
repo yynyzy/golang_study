@@ -3,6 +3,7 @@ package process
 import (
 	"encoding/json"
 	"fmt"
+	"go_code/go_study/26-海量用户通讯系统/chatroom/common/message"
 	"golang_study/26-海量用户通讯系统/chatroom/client/utils"
 	"golang_study/26-海量用户通讯系统/chatroom/common/message"
 	"net"
@@ -60,6 +61,8 @@ func serverProcessMes(Conn net.Conn) {
 			var notifyUserStatusMes message.Notify_User_Status_Mes
 			json.Unmarshal([]byte(mes.Data), &notifyUserStatusMes)
 			updateUsersStatus(&notifyUserStatusMes)
+		case message.SmsMes_Type:
+			outputGroupMes(&mes)
 		default:
 			fmt.Println("服务端返回了未知的消息类型")
 		}
