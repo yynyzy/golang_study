@@ -47,4 +47,23 @@ func ListHeroNode(head *HeroNode) {
 }
 
 func main() {
+	//1．先创建一个头结点，
+	head := &HeroNode{}
+	//2．创建一个新的HeroNode
+	hero1 := &HeroNode{
+		no:       1,
+		name:     "宋江",
+		nickname: "及时雨:",
+	}
+	hero2 := &HeroNode{
+		no:       2,
+		name:     "卢俊义",
+		nickname: "玉麒麟",
+	}
+	//3．加入
+	InsertHeroNode(head, hero1)
+	InsertHeroNode(head, hero2)
+	// 4、显示
+	ListHeroNode(head)
+
 }
