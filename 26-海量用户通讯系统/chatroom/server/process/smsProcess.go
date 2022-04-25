@@ -11,7 +11,7 @@ import (
 type SmsProcess struct {
 }
 
-func (this *SmsProcess) SendGroupMessage(mes message.Message) {
+func (this *SmsProcess) SendGroupMessage(mes *message.Message) {
 	//遍历服务端的onlineUsers map[int]*UserProcess，
 	//将消息转发取出
 
@@ -30,7 +30,7 @@ func (this *SmsProcess) SendGroupMessage(mes message.Message) {
 	}
 
 	for id, up := range userMgr.onlineUsers {
-		if id == smsMes.UserId {
+		if id == smsMes.User.UserId {
 			continue
 		}
 		this.SendToeachUser(data, up.Conn)

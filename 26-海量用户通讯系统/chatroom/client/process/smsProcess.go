@@ -18,8 +18,8 @@ func (this *SmsProcess) SendGroupMessage(Content string) (err error) {
 	//创建一个 smsMes实例
 	var smsMes message.SmsMes
 	smsMes.Content = Content
-	smsMes.UserId = CurUser.UserId
-	smsMes.UserStatus = CurUser.UserStatus
+	smsMes.User.UserId = CurUser.UserId
+	smsMes.User.UserStatus = CurUser.UserStatus
 
 	data, err := json.Marshal(smsMes)
 	if err != nil {
