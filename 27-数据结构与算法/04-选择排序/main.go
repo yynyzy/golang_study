@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 //选择排序，从大到小排
-func selectFunc(arr *[5]int) {
+func selectSort(arr *[5]int) {
 
 	for i := 0; i < len(arr); i++ {
 		var max = arr[i]
@@ -22,6 +22,6 @@ func selectFunc(arr *[5]int) {
 }
 func main() {
 	var arr = [5]int{10, 200, 80, 30, 5}
-	selectFunc(&arr)
+	selectSort(&arr)
 	fmt.Println("选择排序后arr=", arr)
 }
