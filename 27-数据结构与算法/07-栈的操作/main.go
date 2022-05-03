@@ -33,7 +33,7 @@ func (this *stack) List() {
 	}
 	fmt.Println("栈的情况如下:")
 	for i := this.Top; i >= 0; i-- {
-		fmt.Printf("arr[%d]=xdin", i, this.arr[i])
+		fmt.Printf("arr[%d]=%d\n", i, this.arr[i])
 	}
 }
 
@@ -42,8 +42,11 @@ func main() {
 		MaxTop: 5,
 		Top:    -1,
 	}
+	//入栈
 	stack.Push(1)
 	stack.Push(2)
 	stack.Push(3)
 	stack.Push(4)
+	//显示
+	stack.List()
 }
