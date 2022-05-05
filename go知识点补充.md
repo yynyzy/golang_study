@@ -32,6 +32,93 @@
 【共同点：都需要循环！！！！。】
 ```
 
+# 使用pkg/error而不是官方error库
+    在Go的语言演进过程中，error传递的信息太少一直是被诟病的一点。推荐在应用层使用 github.com/pkg/errors 来替换官方的error库，可以返回：
+    1 附加信息：我们希望错误出现的时候能附带一些描述性的错误信息，甚至于这些信息是可以嵌套的。
+    2 附加堆栈：我们希望错误不仅仅打印出错误信息，也能打印出这个错误的堆栈信息，让我们可以知道错误的信息。
+
+# 在初始化slice的时候尽量补全cap
+
+# 初始化一个类的时候，如果类的构造参数较多，尽量使用Option写法
+大部分的时候，初始化一个类我们会使用类似下列的New方法。
+```go
+package newdemo
+
+type Foo struct {
+   name string
+   id int
+   age int
+
+   db interface{}
+}
+
+func NewFoo(name string, id int, age int, db interface{}) *Foo {
+   return &Foo{
+      name: name,
+      id:   id,
+      age:  age,
+      db:   db,
+   }
+}
+```
+我们定义一个NewFoo方法，其中存放初始化Foo结构所需要的各种字段属性。
+这个写法乍看之下是没啥问题的，但是一旦Foo结构内部的字段进行了变化，增加或者减少了，那么这个初始化函数NewFoo就怎么看怎么别扭了。参数继续增加？那么所有调用方的地方也都需要进行修改了，且按照代码整洁的逻辑，参数多于5个，这个函数就很难使用了。而且，如果这5个参数都是可有可无的参数，就是有的参数可以允许不填写，有默认值，比如age这个字段，如果不填写，在后续的业务逻辑中可能没有很多影响，那么我在实际调用NewFoo的时候，age这个字段还需要传递0值。
+
+## 有一种更好的写法：使用Option写法
+Option写法顾命思议，将所有可选的参数作为一个可选方式，一般我们会一定一个“函数类型”来代表这个Option，然后配套将所有可选字段设计一个这个函数类型的具体实现。而在具体的使用的时候，使用可变字段的方式来控制有多少个函数类型会被执行。比如上述的代码，我们会改造为：
+```go
+type Foo struct {
+ name string
+ id int
+ age int
+
+ db interface{}
+}
+
+// FooOption 代表可选参数
+type FooOption func(foo *Foo)
+
+// WithName 代表Name为可选参数
+func WithName(name string) FooOption {
+   return func(foo *Foo) {
+      foo.name = name
+   }
+}
+
+// WithAge 代表age为可选参数
+func WithAge(age int) FooOption {
+   return func(foo *Foo) {
+      foo.age = age
+   }
+}
+
+// WithDB 代表db为可选参数
+func WithDB(db interface{}) FooOption {
+   return func(foo *Foo) {
+      foo.db = db
+   }
+}
+
+// NewFoo 代表初始化
+func NewFoo(id int, options ...FooOption) *Foo {
+   foo := &Foo{
+      name: "default",
+      id:   id,
+      age:  10,
+      db:   nil,
+   }
+   for _, option := range options {
+      option(foo)
+   }
+   return foo
+}
+```
+这种Option的写法在很多著名的库中都有使用到，gorm, go-redis等。所以我们要把这种方式熟悉起来，一旦我们在需要对一个比较复杂的类进行初始化的时候，这种方法应该是最优的方式了。
+
+
+
+# 巧用大括号控制变量作用域
+
 # Go 分布式令牌桶限流 + 兜底保障
 固定时间窗口限流无法处理突然请求洪峰情况，本文讲述的令牌桶线路算法则可以比较好的处理此场景。
 
