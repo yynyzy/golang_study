@@ -13,15 +13,15 @@ func SetWay(myMap *[8][7]int, i int, j int) bool {
 	} else {
 		//说明要继续找
 		if myMap[i][j] == 0 { //如果这个点是可以探测
-			//假设这个点是可以通，但是需要探测上下左右
+			//假设这个点是可以通，但是需要探测 下右上左
 			myMap[i][j] = 2
-			if SetWay(myMap, i-1, j) { // 上
-				return true
-			} else if SetWay(myMap, i+1, j) { //下
-				return true
-			} else if SetWay(myMap, i, j-1) { //左
+			if SetWay(myMap, i+1, j) { //下
 				return true
 			} else if SetWay(myMap, i, j+1) { //右
+				return true
+			} else if SetWay(myMap, i-1, j) { // 上
+				return true
+			} else if SetWay(myMap, i, j-1) { //左
 				return true
 			} else { //死路
 				myMap[i][j] = 3
@@ -52,6 +52,9 @@ func main() {
 		myMap[i][0] = 1
 		myMap[i][6] = 1
 	}
+	SetWay(&myMap, 1, 1)
+	fmt.Println("探测完毕")
+
 	//输出地图
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 7; j++ {
