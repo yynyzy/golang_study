@@ -20,7 +20,7 @@ type HashTable struct {
 }
 
 //1。添加员工的方法,保证添加时,编号从小到大
-func (this *EmpLink) insert(emp *Emp) {
+func (this *EmpLink) Insert(emp *Emp) {
 	cur := this.Head   //这是辅助指针
 	var pre *Emp = nil //这是一个辅助指针pre在cur前面
 	//如果当前的EmpLink就是一个空链表
@@ -31,17 +31,20 @@ func (this *EmpLink) insert(emp *Emp) {
 	//如果不是一个空链表,给emp找到对应的位置并插入
 	//思路是让cur 和 emp比较,然后让pre保持在cur前面
 	for {
-	if cur != nil {
-		//比较
-		if cur.Id > emp.Id {
-			//找到位置
+		if cur != nil {
+			//比较
+			if cur.Id > emp.Id {
+				//找到位置
+				break
+			}
+			pre = cur
+			cur = cur.Next
+		} else {
 			break
 		}
-		pre = cur
-		cur = cur.Next
-	}else{
-		break
 	}
+	pre.Next = emp
+	emp.Next = cur
 }
 
 //给HashTable编写Insert雇员的方法.
