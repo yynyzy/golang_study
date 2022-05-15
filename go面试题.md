@@ -1,14 +1,10 @@
-面试题1
-来源：geektutu
+# 基础语法
 
-基础语法
-01 = 和 := 的区别？
-=是赋值变量，:=是定义变量。
-
-02 指针的作用
+# 01 指针的作用
 一个指针可以指向任意变量的地址，它所指向的地址在32位或64位机器上分别固定占4或8个字节。指针的作用有：
 
 获取变量的值
+```go
  import fmt
  ​
  func main(){
@@ -16,32 +12,33 @@
   p := &a//取址&
   fmt.Printf("%d\n", *p);//取值*
  }
+ ```
 改变变量的值
+```go
  // 交换函数
  func swap(a, b *int) {
      *a, *b = *b, *a
  }
+ ```
 用指针替代值传入函数，比如类的接收器就是这样的。
+```go
  type A struct{}
  ​
  func (a *A) fun(){}
+```
 
 
-03 Go 允许多个返回值吗？
-可以。通常函数除了一般返回值还会返回一个error。
-
-
-
-04 Go 有异常类型吗？
+# 02 Go 有异常类型吗？
 有。Go用error类型代替try...catch语句，这样可以节省资源。同时增加代码可读性：
-
+```go
  _,err := errorDemo()
   if err!=nil{
    fmt.Println(err)
    return
   }
+  ```
 也可以用errors.New()来定义自己的异常。errors.Error()会返回异常的字符串表示。只要实现error接口就可以定义自己的异常，
-
+```go
  type errorString struct {
   s string
  }
@@ -54,7 +51,7 @@
  func New(text string) error {
   return &errorString{text}
  }
-
+```
 
 05 什么是协程（Goroutine）
 协程是用户态轻量级线程，它是线程调度的基本单位。通常在函数前加上go关键字就能实现并发。一个Goroutine会以一个很小的栈启动2KB或4KB，当遇到栈空间不足时，栈会自动伸缩， 因此可以轻易实现成千上万个goroutine同时启动。
