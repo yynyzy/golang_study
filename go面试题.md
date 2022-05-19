@@ -53,55 +53,59 @@
  }
 ```
 
-05 什么是协程（Goroutine）
+# 03 什么是协程（Goroutine）
 协程是用户态轻量级线程，它是线程调度的基本单位。通常在函数前加上go关键字就能实现并发。一个Goroutine会以一个很小的栈启动2KB或4KB，当遇到栈空间不足时，栈会自动伸缩， 因此可以轻易实现成千上万个goroutine同时启动。
 
 
 
-06 ❤ 如何高效地拼接字符串
+# 04 ❤ 如何高效地拼接字符串
 拼接字符串的方式有："+", fmt.Sprintf, strings.Builder, bytes.Buffer, strings.Join
 
-1 "+"
+## 1 "+"
 
 使用+操作符进行拼接时，会对字符串进行遍历，计算并开辟一个新的空间来存储原来的两个字符串。
 
-2 fmt.Sprintf
+## 2 fmt.Sprintf
 
 由于采用了接口参数，必须要用反射获取值，因此有性能损耗。
 
-3 strings.Builder：
+## 3 strings.Builder：
 
 用WriteString()进行拼接，内部实现是指针+切片，同时String()返回拼接后的字符串，它是直接把[]byte转换为string，从而避免变量拷贝。
 
 strings.builder的实现原理很简单，结构如下：
-
+```go
  type Builder struct {
      addr *Builder // of receiver, to detect copies by value
      buf  []byte // 1
  }
+ ```
 addr字段主要是做copycheck，buf字段是一个byte类型的切片，这个就是用来存放字符串内容的，提供的writeString()方法就是像切片buf中追加数据：
-
+```go
  func (b *Builder) WriteString(s string) (int, error) {
      b.copyCheck()
      b.buf = append(b.buf, s...)
      return len(s), nil
  }
+```
 提供的String方法就是将[]byte转换为string类型，这里为了避免内存拷贝的问题，使用了强制转换来避免内存拷贝：
-
+ ```go
  func (b *Builder) String() string {
      return *(*string)(unsafe.Pointer(&b.buf))
  }
-4 bytes.Buffer
+  ```
+## 4 bytes.Buffer
 
 bytes.Buffer是一个一个缓冲byte类型的缓冲器，这个缓冲器里存放着都是byte。使用方式如下：
 
 bytes.buffer底层也是一个[]byte切片，结构体如下：
-
+```go
 type Buffer struct {
     buf      []byte // contents are the bytes buf[off : len(buf)]
     off      int    // read at &buf[off], write at &buf[len(buf)]
     lastRead readOp // last read operation, so that Unread* can work correctly.
 }
+```
 因为bytes.Buffer可以持续向Buffer尾部写入数据，从Buffer头部读取数据，所以off字段用来记录读取位置，再利用切片的cap特性来知道写入位置，这个不是本次的重点，重点看一下WriteString方法是如何拼接字符串的：
 
 func (b *Buffer) WriteString(s string) (n int, err error) {
@@ -175,8 +179,8 @@ func main(){
 
 strings.Join ≈ strings.Builder > bytes.Buffer > "+" > fmt.Sprintf
 
-参考资料：字符串拼接性能及原理 | Go 语言高性能编程 | 极客兔兔
-07 什么是 rune 类型
+
+## 07 什么是 rune 类型
 rune是int32的别名，用来区分字符值和整数值。比如utf-8汉字占3个字节，按照一般方法遍历汉字字符串得到的是乱码，这个时候要将字符串转换为rune:
 
 	sample := "我爱GO"
