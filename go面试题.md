@@ -107,7 +107,7 @@ type Buffer struct {
 }
 ```
 因为bytes.Buffer可以持续向Buffer尾部写入数据，从Buffer头部读取数据，所以off字段用来记录读取位置，再利用切片的cap特性来知道写入位置，这个不是本次的重点，重点看一下WriteString方法是如何拼接字符串的：
-
+```go
 func (b *Buffer) WriteString(s string) (n int, err error) {
     b.lastRead = opInvalid
     m, ok := b.tryGrowByReslice(len(s))
@@ -116,10 +116,11 @@ func (b *Buffer) WriteString(s string) (n int, err error) {
     }
     return copy(b.buf[m:], s), nil
 }
+```
 切片在创建时并不会申请内存块，只有在往里写数据时才会申请，首次申请的大小即为写入数据的大小。如果写入的数据小于64字节，则按64字节申请。采用动态扩展slice的机制，字符串追加采用copy的方式将追加的部分拷贝到尾部，copy是内置的拷贝函数，可以减少内存分配。
 
 但是在将[]byte转换为string类型依旧使用了标准类型，所以会发生内存分配：
-
+```go
 func (b *Buffer) String() string {
     if b == nil {
         // Special case, useful in debugging.
@@ -127,10 +128,11 @@ func (b *Buffer) String() string {
     }
     return string(b.buf[b.off:])
 }
-5 strings.join
+```
+## 5 strings.join
 
 strings.join也是基于strings.builder来实现的,并且可以自定义分隔符，代码如下：
-
+```go
 func Join(elems []string, sep string) string {
     switch len(elems) {
     case 0:
@@ -152,8 +154,9 @@ func Join(elems []string, sep string) string {
     }
     return b.String()
 }
+```
 唯一不同在于在join方法内调用了b.Grow(n)方法，这个是进行初步的容量分配，而前面计算的n的长度就是我们要拼接的slice的长度，因为我们传入切片长度固定，所以提前进行容量分配可以减少内存分配，很高效。
-
+```go
 func main(){
 	a := []string{"a", "b", "c"}
 	//方式1：
@@ -175,7 +178,8 @@ func main(){
 	//方式5：
 	ret := strings.Join(a,"")
 }
-总结：
+```
+## 总结：
 
 strings.Join ≈ strings.Builder > bytes.Buffer > "+" > fmt.Sprintf
 
