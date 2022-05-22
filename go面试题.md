@@ -64,11 +64,9 @@
 ## 1 "+"
 
 使用+操作符进行拼接时，会对字符串进行遍历，计算并开辟一个新的空间来存储原来的两个字符串。
-
 ## 2 fmt.Sprintf
 
 由于采用了接口参数，必须要用反射获取值，因此有性能损耗。
-
 ## 3 strings.Builder：
 
 用WriteString()进行拼接，内部实现是指针+切片，同时String()返回拼接后的字符串，它是直接把[]byte转换为string，从而避免变量拷贝。
@@ -180,29 +178,29 @@ func main(){
 }
 ```
 ## 总结：
-
 strings.Join ≈ strings.Builder > bytes.Buffer > "+" > fmt.Sprintf
 
 
-## 07 什么是 rune 类型
+# 05 什么是 rune 类型
 rune是int32的别名，用来区分字符值和整数值。比如utf-8汉字占3个字节，按照一般方法遍历汉字字符串得到的是乱码，这个时候要将字符串转换为rune:
-
+```go
 	sample := "我爱GO"
 	runeSamp := []rune(sample)
 	runeSamp[0] = '你'
 	fmt.Println(string(runeSamp))
+```
 
-
-08 如何判断 map 中是否包含某个 key ？
+# 06 如何判断 map 中是否包含某个 key ？
+```go
 var sample map[int]int
 if _, ok := sample[10];ok{
 
 }else{
 
 }
+```
 
-
-09 Go 支持默认参数或可选参数吗？
+# 07 Go 支持默认参数或可选参数吗？
 不支持。但是可以利用结构体参数，或者...传入参数切片。
 
 
