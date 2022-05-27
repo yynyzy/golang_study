@@ -68,7 +68,6 @@
 由于采用了接口参数，必须要用反射获取值，因此有性能损耗。
 
 ## 3 strings.Builder：
-
 用WriteString()进行拼接，内部实现是指针+切片，同时String()返回拼接后的字符串，它是直接把[]byte转换为string，从而避免变量拷贝。
 
 strings.builder的实现原理很简单，结构如下：
@@ -92,10 +91,9 @@ addr字段主要是做copycheck，buf字段是一个byte类型的切片，这个
      return *(*string)(unsafe.Pointer(&b.buf))
  }
   ```
+
 ## 4 bytes.Buffer
-
 bytes.Buffer是一个一个缓冲byte类型的缓冲器，这个缓冲器里存放着都是byte。使用方式如下：
-
 bytes.buffer底层也是一个[]byte切片，结构体如下：
 ```go
 type Buffer struct {
@@ -127,6 +125,7 @@ func (b *Buffer) String() string {
     return string(b.buf[b.off:])
 }
 ```
+
 ## 5 strings.join
 
 strings.join也是基于strings.builder来实现的,并且可以自定义分隔符，代码如下：
@@ -177,6 +176,7 @@ func main(){
 	ret := strings.Join(a,"")
 }
 ```
+
 ## 总结：
 strings.Join ≈ strings.Builder > bytes.Buffer > "+" > fmt.Sprintf
 
