@@ -54,19 +54,19 @@
 ```
 
 # 03 什么是协程（Goroutine）
-协程是用户态轻量级线程，它是线程调度的基本单位。通常在函数前加上go关键字就能实现并发。一个Goroutine会以一个很小的栈启动2KB或4KB，当遇到栈空间不足时，栈会自动伸缩， 因此可以轻易实现成千上万个goroutine同时启动。
+协程是用*户态轻量级线程*，它是线程调度的基本单位。通常在函数前加上go关键字就能实现并发。一个Goroutine会以一个很小的栈启动2KB或4KB，当遇到栈空间不足时，栈会自动伸缩， 因此可以轻易实现成千上万个goroutine同时启动。
 
 
 
-# 04 ❤ 如何高效地拼接字符串
+# 04 如何高效地拼接字符串
 拼接字符串的方式有："+", fmt.Sprintf, strings.Builder, bytes.Buffer, strings.Join
 
 ## 1 "+"
-
 使用+操作符进行拼接时，会对字符串进行遍历，计算并开辟一个新的空间来存储原来的两个字符串。
-## 2 fmt.Sprintf
 
+## 2 fmt.Sprintf
 由于采用了接口参数，必须要用反射获取值，因此有性能损耗。
+
 ## 3 strings.Builder：
 
 用WriteString()进行拼接，内部实现是指针+切片，同时String()返回拼接后的字符串，它是直接把[]byte转换为string，从而避免变量拷贝。
@@ -223,9 +223,9 @@ db: sqlx模块中对应的数据库字段名
 form: gin框架中对应的前端的数据字段名
 binding: 搭配 form 使用, 默认如果没查找到结构体中的某个字段则不报错值为空, binding为 required 代表没找到返回错误给前端
 
-13 如何获取一个结构体的所有tag？
+# 11 如何获取一个结构体的所有tag？
 利用反射：
-
+```go
 type Author struct {
 	Name         int      `json:Name`
 	Publications []string `json:Publication,omitempty`
@@ -239,7 +239,7 @@ func main() {
 		fmt.Println(s.Tag)
 	}
 }
-
+```
 
 
 14 如何判断 2 个字符串切片（slice) 是相等的？
