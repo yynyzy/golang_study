@@ -282,8 +282,8 @@ go build -gcflags '-m -m -l' xxx.go.
 
 # 16. 2个nil可能不相等吗？
 接口(interface) 是对非接口值(例如指针，struct等)的封装，内部实现包含 2 个字段，类型 T 和 值 V。一个接口等于 nil，当且仅当 T 和 V 处于 unset 状态（T=nil，V is unset）。
-两个接口值比较时，会先比较 T，再比较 V。
-接口值与非接口值比较时，会先将非接口值尝试转换为接口值，再比较。
+1.两个接口值比较时，会先比较 T，再比较 V。
+1.接口值与非接口值比较时，会先将非接口值尝试转换为接口值，再比较。
 ```go
 func main() {
     var p *int = nil
@@ -292,6 +292,13 @@ func main() {
     fmt.Println(p == nil) // true
     fmt.Println(i == nil) // false
 }
+```
+```go
+	var p *int = nil
+	p1 := interface{}(p)
+	var i interface{} = nil
+	fmt.Printf("%T\n", i) //nil
+	fmt.Printf("%T", p1)  //*int
 ```
 上面这个例子中，将一个 nil 非接口值 p 赋值给接口 i，此时，i 的内部字段为(T=*int, V=nil)，i 与 p 作比较时，将 p 转换为接口后再比较，因此 i == p，p 与 nil 比较，直接比较值，所以 p == nil。
 但是当 i 与 nil 比较时，会将 nil 转换为接口 (T=nil, V=nil)，与i (T=*int, V=nil) 不相等，因此 i != nil。因此 V 为 nil ，但 T 不为 nil 的接口不等于 nil。
@@ -439,19 +446,21 @@ for i := range picture {
 }
 // Allocate the top-level slice, the same as before.
 picture := make([][]uint8, YSize) // One row per unit of y.
-// Allocate one large slice to hold all the pixels.
 pixels := make([]uint8, XSize*YSize) // Has type []uint8 even though picture is [][]uint8.
-// Loop over the rows, slicingog each row from the front of the remaining pixels slice.
+
 for i := range picture {
-	picture[i], pixels = pixels[:XSize], pixels[XSize:]
+	picture[i], pixels = pixels[:XSize], pixels[XSize:] 
+	//从 pixels 中截取 XSize个长度赋予 picture[i]，再将 pixels 赋予 pixels[XSize:]来减少长度
 ```
 
 # 04. uint型变量值分别为 1，2，它们相减的结果是多少？
+```go
 	var a uint = 1
 	var b uint = 2
 	fmt.Println(a - b)
+```
 答案，结果会溢出，如果是32位系统，结果是2^32-1，如果是64位系统，结果2^64-1.
-
+:= 会进行类型的自动推导c为uint32位，所以系统会把负数的1的正负位当做最高进制来算，造成数值很大
 
 
 # 05. 讲一下go有没有函数在main之前执行？怎么用？
@@ -470,7 +479,7 @@ func init(){
 不同包的init函数按照包导入的依赖关系决定执行顺序。
 
 
-下面这句代码是什么作用，为什么要定义一个空值？
+# 下面这句代码是什么作用，为什么要定义一个空值？
 var _ Codec = (*GobCodec)(nil)
 type GobCodec struct{
 	conn io.ReadWriteCloser
