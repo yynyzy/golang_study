@@ -404,35 +404,33 @@ wg.Wait()
 # 01. ❤new和make的区别？
 new只用于分配内存，返回一个指向地址的指针。它为每个新类型分配一片内存，初始化为0且返回类型*T的内存地址，它相当于&T{}
 make只可用于slice,map,channel的初始化,返回的是引用。
-
-
+```go
 a := new(int)
 *a = 46
 fmt.Println(*a)
+```
 
+# 02. 封装、继承、多态
 
-请你讲一下Go面向对象是如何实现的？
-Go实现面向对象的两个关键是struct和interface。
+*封装：*对于同一个包，对象对包内的文件可见；对不同的包，需要将对象以大写开头才是可见的。
 
-封装：对于同一个包，对象对包内的文件可见；对不同的包，需要将对象以大写开头才是可见的。
-
-继承：继承是编译时特征，在struct内加入所需要继承的类即可：
-
+*继承：*继承是编译时特征，在struct内加入所需要继承的类即可：
+```go
 type A struct{}
 type B struct{
 A
 }
-多态：多态是运行时特征，Go多态通过interface来实现。类型和接口是松耦合的，某个类型的实例可以赋给它所实现的任意接口类型的变量。
+```
+*多态：*多态是运行时特征，Go多态通过interface来实现。类型和接口是松耦合的，某个类型的实例可以赋给它所实现的任意接口类型的变量。
 
 Go支持多重继承，就是在类型中嵌入所有必要的父类型。
 
 
 
-二维切片如何初始化
+# 03. 二维切片如何初始化
 一种方式是对每一个维度都初始化。
-
 另一种方式是用一个单独的一维切片初始化。
-
+```go
 // Allocate the top-level slice.
 picture := make([][]uint8, YSize) // One row per unit of y.
 // Loop over the rows, allocating the slice for each row.
@@ -446,9 +444,9 @@ pixels := make([]uint8, XSize*YSize) // Has type []uint8 even though picture is 
 // Loop over the rows, slicingog each row from the front of the remaining pixels slice.
 for i := range picture {
 	picture[i], pixels = pixels[:XSize], pixels[XSize:]
+```
 
-
-uint型变量值分别为 1，2，它们相减的结果是多少？
+# 04. uint型变量值分别为 1，2，它们相减的结果是多少？
 	var a uint = 1
 	var b uint = 2
 	fmt.Println(a - b)
@@ -456,7 +454,7 @@ uint型变量值分别为 1，2，它们相减的结果是多少？
 
 
 
-讲一下go有没有函数在main之前执行？怎么用？
+# 05. 讲一下go有没有函数在main之前执行？怎么用？
 go的init函数在main函数之前执行，它有如下特点：
 
 初始化不能采用初始化表达式初始化的变量；
