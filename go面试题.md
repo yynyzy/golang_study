@@ -536,21 +536,18 @@ for i := range picture {
 
 # 05. 讲一下go有没有函数在main之前执行？怎么用？
 go的init函数在main函数之前执行，它有如下特点：
-
-初始化不能采用初始化表达式初始化的变量；
-程序运行前执行注册
-实现sync.Once功能
-不能被其它函数调用
-init函数没有入口参数和返回值：
-func init(){
-	register...
-}
-每个包可以有多个init函数，每个源文件也可以有多个init函数。
-同一个包的init执行顺序，golang没有明确定义，编程时要注意程序不要依赖这个执行顺序。
-不同包的init函数按照包导入的依赖关系决定执行顺序。
+·初始化不能采用初始化表达式初始化的变量；
+·程序运行前执行注册
+·实现sync.Once功能
+·不能被其它函数调用
+·init函数没有入口参数和返回值：
+·每个包可以有多个init函数，每个源文件也可以有多个init函数。
+·同一个包的init执行顺序，golang没有明确定义，编程时要注意程序不要依赖这个执行顺序。
+·不同包的init函数按照包导入的依赖关系决定执行顺序。
 
 
-# 下面这句代码是什么作用，为什么要定义一个空值？
+# 06. 下面这句代码是什么作用，为什么要定义一个空值？
+```go
 var _ Codec = (*GobCodec)(nil)
 type GobCodec struct{
 	conn io.ReadWriteCloser
@@ -565,11 +562,12 @@ type Codec interface {
 	ReadBody(interface{})  error
 	Write(*Header, interface{}) error
 }
-答：将nil转换为*GobCodec类型，然后再转换为Codec接口，如果转换失败，说明*GobCodec没有实现Codec接口的所有方法。
+```
+答：将nil转换为GobCodec类型，然后再转换为Codec接口，如果转换失败，说明GobCodec没有实现Codec接口的所有方法。
 
 
 
-❤golang的内存管理的原理清楚吗？简述go内存管理机制。
+# 07. ❤golang的内存管理的原理清楚吗？简述go内存管理机制。
 golang内存管理基本是参考tcmalloc来进行的。go内存管理本质上是一个内存池，只不过内部做了很多优化：自动伸缩内存池大小，合理的切割内存块。
 
 一些基本概念：
@@ -601,10 +599,9 @@ mcentral
 mcache
 为了提高内存并发申请效率，加入缓存层mcache。每一个mcache和处理器P对应。Go申请内存首先从P的mcache中分配，如果没有可用的span再从mcentral中获取。
 
-参考资料：Go 语言内存管理（二）：Go 内存管理
 
 
-❤mutex有几种模式？
+# ❤mutex有几种模式？
 mutex有两种模式：normal 和 starvation
 
 正常模式
