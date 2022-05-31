@@ -478,7 +478,7 @@ wg.Wait()
 
 
 
-# **面试题**
+# **面试题1**
 # 01. ❤new和make的区别？
 new只用于分配内存，返回一个指向地址的指针。它为每个新类型分配一片内存，初始化为0且返回类型*T的内存地址，它相当于&T{}
 make只可用于slice,map,channel的初始化,返回的是引用。
@@ -584,44 +584,30 @@ sizeclass : 空间规格，每个 span 都带有一个 sizeclass ，标记着该
 *mheap.arena_start* : 将要分配给应用程序使用的空间。
 
 *mcentral*：用途相同的span会以链表的形式组织在一起存放在mcentral中。这里用途用sizeclass来表示，就是该span存储哪种大小的对象。
-
 找到合适的 span 后，会从中取一个 object 返回给上层使用。
 
-mcache
-为了提高内存并发申请效率，加入缓存层mcache。每一个mcache和处理器P对应。Go申请内存首先从P的mcache中分配，如果没有可用的span再从mcentral中获取。
+*mcache*：为了提高内存并发申请效率，加入缓存层mcache。每一个mcache和处理器P对应。Go申请内存首先从P的mcache中分配，如果没有可用的span再从mcentral中获取。
 
 
 
-# ❤mutex有几种模式？
-mutex有两种模式：normal 和 starvation
-
-正常模式
-
+# 08. ❤mutex有几种模式？
+mutex有两种模式：*normal* 和 *starvation*
+*正常模式*
 所有goroutine按照FIFO的顺序进行锁获取，被唤醒的goroutine和新请求锁的goroutine同时进行锁获取，通常新请求锁的goroutine更容易获取锁(持续占有cpu)，被唤醒的goroutine则不容易获取到锁。公平性：否。
 
-饥饿模式
-
+*饥饿模式*
 所有尝试获取锁的goroutine进行等待排队，新请求锁的goroutine不会进行锁获取(禁用自旋)，而是加入队列尾部等待获取锁。公平性：是。
 
-参考链接：Go Mutex 饥饿模式，GO 互斥锁（Mutex）原理
 
 
 
+# **面试题2**
 
-面试题3
-来源：如果你是一个Golang面试官，你会问哪些问题？
-
-❤go如何进行调度的。GMP中状态流转。
+# 01. ❤go如何进行调度的。GMP中状态流转。
 Go里面GMP分别代表：G：goroutine，M：线程（真正在CPU上跑的），P：调度器。
+GMP模型调度器是M和G之间桥梁。
 
-
-
-
-GMP模型
-调度器是M和G之间桥梁。
-
-go进行调度过程：
-
+*go进行调度过程*：
 某个线程尝试创建一个新的G，那么这个G就会被安排到这个线程的G本地队列LRQ中，如果LRQ满了，就会分配到全局队列GRQ中；
 尝试获取当前线程的M，如果无法获取，就会从空闲的M列表中找一个，如果空闲列表也没有，那么就创建一个M，然后绑定G与P运行。
 进入调度循环：
@@ -631,58 +617,55 @@ go进行调度过程：
 
 
 
-Go什么时候发生阻塞？阻塞时，调度器会怎么做。
+# 02. Go什么时候发生阻塞？阻塞时，调度器会怎么做。
 用于原子、互斥量或通道操作导致goroutine阻塞，调度器将把当前阻塞的goroutine从本地运行队列LRQ换出，并重新调度其它goroutine；
 由于网络请求和IO导致的阻塞，Go提供了网络轮询器（Netpoller）来处理，后台用epoll等技术实现IO多路复用。
-其它回答：
 
+其它回答：
 channel阻塞：当goroutine读写channel发生阻塞时，会调用gopark函数，该G脱离当前的M和P，调度器将新的G放入当前M。
 系统调用：当某个G由于系统调用陷入内核态，该P就会脱离当前M，此时P会更新自己的状态为Psyscall，M与G相互绑定，进行系统调用。结束以后，若该P状态还是Psyscall，则直接关联该M和G，否则使用闲置的处理器处理该G。
 系统监控：当某个G在P上运行的时间超过10ms时候，或者P处于Psyscall状态过长等情况就会调用retake函数，触发新的调度。
 主动让出：由于是协作式调度，该G会主动让出当前的P（通过GoSched），更新状态为Grunnable，该P会调度队列中的G运行。
-更多关于netpoller的内容可以参看：https://strikefreedom.top/go-netpoll-io-multiplexing-reactor
-❤Go中GMP有哪些状态？
-G的状态：
+
+# 03. ❤Go中GMP有哪些状态？
+## *G的状态*：
 
 _Gidle：刚刚被分配并且还没有被初始化，值为0，为创建goroutine后的默认值
 
 _Grunnable： 没有执行代码，没有栈的所有权，存储在运行队列中，可能在某个P的本地队列或全局队列中(如上图)。
 
-_Grunning： 正在执行代码的goroutine，拥有栈的所有权(如上图)。
+_Grunning： 正在执行代码的goroutine，拥有栈的所有权。
 
-_Gsyscall：正在执行系统调用，拥有栈的所有权，与P脱离，但是与某个M绑定，会在调用结束后被分配到运行队列(如上图)。
+_Gsyscall：正在执行系统调用，拥有栈的所有权，与P脱离，但是与某个M绑定，会在调用结束后被分配到运行队列。
 
-_Gwaiting：被阻塞的goroutine，阻塞在某个channel的发送或者接收队列(如上图)。
+_Gwaiting：被阻塞的goroutine，阻塞在某个channel的发送或者接收队列。
 
-_Gdead： 当前goroutine未被使用，没有执行代码，可能有分配的栈，分布在空闲列表gFree，可能是一个刚刚初始化的goroutine，也可能是执行了goexit退出的goroutine(如上图)。
+_Gdead： 当前goroutine未被使用，没有执行代码，可能有分配的栈，分布在空闲列表gFree，可能是一个刚刚初始化的goroutine，也可能是执行了goexit退出的goroutine。
 
 _Gcopystac：栈正在被拷贝，没有执行代码，不在运行队列上，执行权在
 
 _Gscan ： GC 正在扫描栈空间，没有执行代码，可以与其他状态同时存在。
 
-P的状态：
+## *P的状态*：
 
 _Pidle ：处理器没有运行用户代码或者调度器，被空闲队列或者改变其状态的结构持有，运行队列为空
 
-_Prunning ：被线程 M 持有，并且正在执行用户代码或者调度器(如上图)
+_Prunning ：被线程 M 持有，并且正在执行用户代码或者调度器
 
-_Psyscall：没有执行用户代码，当前线程陷入系统调用(如上图)
+_Psyscall：没有执行用户代码，当前线程陷入系统调用
 
 _Pgcstop ：被线程 M 持有，当前处理器由于垃圾回收被停止
 
 _Pdead ：当前处理器已经不被使用
 
-M的状态：
+## *M的状态*：
 
 自旋线程：处于运行状态但是没有可执行goroutine的线程，数量最多为GOMAXPROC，若是数量大于GOMAXPROC就会进入休眠。
 
 非自旋线程：处于运行状态有可执行goroutine的线程。
 
-下面一张图很好的展示了Goroutine状态流转：
 
-
-Goroutine状态流转
-GMP能不能去掉P层？会怎么样？
+# 04. GMP能不能去掉P层？会怎么样？
 去掉p会导致，当G进行系统调用时候，会一直阻塞，其它G无法获得M。
 
 
