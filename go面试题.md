@@ -425,6 +425,38 @@ func addNum(sli []int) {
 *如果想在update内用append，而且还想改了原切片，怎么破？*
 给函数传切片的地址：func updateSlice6(s *[]string) {}
 
+# 22. go 遍历 chan 的3种方法
+```go
+【一】for v:=range p{//遍历出来的数据，每一层创建一个容器v,v作用域是一层循环，一层结束后释放，下一层再建
+		fmt.Println(v)//循环的条件是   p中有数据
+	  }
+ 
+【二】	for{//无条件循环，最后通过break跳出循环   注意循环不会造成栈溢出，因为一层结束后释放本层资源
+			if v,ok:=<-p;ok{//每一层遍历都创建 v ok,同第一种方式
+				fmt.Println(v)
+			}else{
+				break
+			}
+		}
+
+【三】v,ok:=<-p
+	 for ok{//循环条件是 ok为真 //循环出来的数据放在循环体外
+		fmt.Println(v)
+		v,ok=<-p
+	 }
+【三也可以这样写】
+      v,ok ；= <-p
+      for{
+         if ok{
+           fmt.Println(v)
+		   v,ok=<-p
+         }else{
+           break
+         }       
+      }
+【共同点：都需要循环！！！！。】
+```
+
 # **并发编程**
 # 01. ❤无缓冲的 channel 和有缓冲的 channel 的区别？
 *1.无缓冲区channel，一直是阻塞的；有缓冲区channel只有缓冲区满之后才会阻塞*
