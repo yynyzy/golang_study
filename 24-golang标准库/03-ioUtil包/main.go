@@ -39,7 +39,22 @@ func test_ReadDir() {
 	}
 
 }
+
+//读取文件
+func test_Readfile() {
+	f, _ := ioutil.ReadFile("go_study\\24-golang标准库\\03-ioUtil包\\a.txt")
+	fmt.Printf("string(f)=%v\n", string(f))
+}
+
+//写
+func test_Write() {
+	var s []byte = []byte("yzyandyyn")
+	ioutil.WriteFile("go_study\\24-golang标准库\\03-ioUtil包\\a.txt", s, 0664)
+}
+
 func main() {
 	test_ReadAll()
 	test_ReadDir()
+	test_Readfile()
+	test_Write()
 }
