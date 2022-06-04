@@ -13,6 +13,7 @@ import (
 
 func main() {
 	//file 可以叫 file对象，file句柄，file指针
+	//open 打开文件只能只读，openfile 可写可读
 	file, err := os.Open("./test.txt")
 	if err != nil {
 		fmt.Println("Open file error!")
