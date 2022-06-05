@@ -79,6 +79,52 @@ func testJoin() {
 	sep5 := []byte("#")
 	fmt.Println(string(bytes.Join(s2, sep5))) //你好#世界
 }
+
+func testReader() {
+	data := "123456789"
+	//通过[]byte创建Reader
+	re := bytes.NewReader([]byte(data))
+	//返回未读取部分的长度
+
+	fmt.Println("re len : ", re.Len())
+	//返回底层数据总长度
+
+	fmt.Println("re size : ", re.Size())
+	fmt.Println("----------")
+	buf := make([]byte, 2)
+	for {
+		//读取数据
+		n, err := re.Read(buf)
+		if err != nil {
+			break
+		}
+		fmt.Println(string(buf[:n]))
+	}
+	fmt.Println("-----------")
+	//设置偏移量,因为上面的操作已经修改了读取位置等信息
+	re.Seek(0, 0)
+	for {
+		//一个字节一个字节的读
+		b, err := re.ReadByte()
+		if err != nil {
+			break
+		}
+		fmt.Println(string(b))
+	}
+	fmt.Println("-----------")
+	re.Seek(0, 0)
+	off := int64(0)
+	for {
+		//指定偏移量读取
+		n, err := re.ReadAt(buf, off)
+		if err != nil {
+			break
+		}
+		off += int64(n)
+		fmt.Println(off, string(buf[:n]))
+	}
+}
+
 func main() {
 	// test()
 	// test2()
@@ -86,5 +132,6 @@ func main() {
 	// testRepeat()
 	// testReplace()
 	// testRunes()
-	testJoin()
+	// testJoin()
+	testReader()
 }
