@@ -46,7 +46,8 @@ func test3() {
 	fmt.Printf("%c\n", c)
 	c, _ = br.ReadByte()
 	fmt.Printf("%c\n", c)
-	br.UnreadByte() //吐出一个字节
+
+	br.UnreadByte() //回退一个字节
 	c, _ = br.ReadByte()
 	fmt.Printf("%c\n", c)
 }
