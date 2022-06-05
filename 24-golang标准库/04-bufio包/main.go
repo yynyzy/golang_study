@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -111,6 +112,33 @@ func test7() {
 	defer f.Close()
 	br.WriteTo(f)
 	// fmt.Printf("%s\n", b)
+}
+
+//带缓冲区的写
+func test8() {
+	f, _ := os.OpenFile("go_study\\24-golang标准库\\04-bufio包\\c.txt", os.O_RDWR, 0777)
+	defer f.Close()
+	w := bufio.NewWriter(f)
+	w.WriteString("hello YZY")
+	w.Flush() //将缓冲区数据真正写入，（否则还在缓冲区）
+}
+
+//Available() 和 Buffered()
+func test9() {
+	b := bytes.NewBuffer(make([]byte, 0))
+	bw := bufio.NewWriter(b)
+	fmt.Println(bw.Available()) // 4096  ，缓冲区剩余多少字节容量
+	fmt.Println(bw.Buffered())  // 0	，已缓冲的字节数
+
+	bw.WriteString("ABCDEFGHIKLMN")
+	fmt.Println(bw.Available()) // 4083
+	fmt.Println(bw.Buffered())  // 13
+	fmt.Printf("%q\n", b)       // ""
+
+	bw.Flush()
+	fmt.Println(bw.Available()) //4096
+	fmt.Println(bw.Buffered())  //0
+	fmt.Printf("%q\n", b)       //"ABCDEFGHIKLMN"
 
 }
 func main() {
@@ -120,5 +148,7 @@ func main() {
 	// test4()
 	// test5()
 	// test6()
-	test7()
+	// test7()
+	// test8()
+	test9()
 }
