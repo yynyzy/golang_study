@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"strings"
 )
 
@@ -140,6 +141,17 @@ func testBuffer2() {
 	fmt.Printf("b: %v\n", string(b.Bytes()))
 }
 
+func testBuffer3() {
+	var b = bytes.NewBufferString("hello world")
+	b1 := make([]byte, 2)
+	for {
+		n, err := b.Read(b1)
+		if err == io.EOF {
+			break
+		}
+		fmt.Printf("b1: %v\n", string(b1[0:n]))
+	}
+}
 func main() {
 	// test()
 	// test2()
@@ -150,5 +162,6 @@ func main() {
 	// testJoin()
 	// testReader()
 	// testBuffer()
-	testBuffer2()
+	// testBuffer2()
+	testBuffer3()
 }
