@@ -141,6 +141,22 @@ func test9() {
 	fmt.Printf("%q\n", b)       //"ABCDEFGHIKLMN"
 
 }
+
+// NewReadWriter 有读与写的功能
+func test10() {
+	b := bytes.NewBuffer(make([]byte, 0))
+	bw := bufio.NewWriter(b)
+	s := strings.NewReader("123")
+	br := bufio.NewReader(s)
+	rw := bufio.NewReadWriter(br, bw)
+
+	p, _ := rw.ReadString('\n')
+	fmt.Println(string(p)) //123
+
+	rw.WriteString("yzy")
+	rw.Flush()
+	fmt.Println(b) //yzy
+}
 func main() {
 	// test1()
 	// test2()
@@ -150,5 +166,6 @@ func main() {
 	// test6()
 	// test7()
 	// test8()
-	test9()
+	// test9()
+	test10()
 }
