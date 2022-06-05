@@ -112,6 +112,7 @@ func testReader() {
 		fmt.Println(string(b))
 	}
 	fmt.Println("-----------")
+
 	re.Seek(0, 0)
 	off := int64(0)
 	for {
@@ -124,6 +125,20 @@ func testReader() {
 		fmt.Println(off, string(buf[:n]))
 	}
 }
+func testBuffer() {
+	var b bytes.Buffer
+	fmt.Printf("b: %v\n", b)
+	var b1 = bytes.NewBufferString("he11o")
+	fmt.Printf("b1: %v\n", b1)
+	var b2 = bytes.NewBuffer([]byte("he11o"))
+	fmt.Printf("b2: %v\n", b2)
+}
+func testBuffer2() {
+	var b bytes.Buffer
+	n, _ := b.WriteString("hello")
+	fmt.Printf("n: %v\n", n)
+	fmt.Printf("b: %v\n", string(b.Bytes()))
+}
 
 func main() {
 	// test()
@@ -133,5 +148,7 @@ func main() {
 	// testReplace()
 	// testRunes()
 	// testJoin()
-	testReader()
+	// testReader()
+	// testBuffer()
+	testBuffer2()
 }
