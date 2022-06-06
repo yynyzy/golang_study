@@ -58,7 +58,7 @@ type testslice [][]int
 
 func (l testslice) Len() int           { return len(l) }
 func (l testslice) Swap(i, j int)      { l[i], l[j] = l[j], l[i] }
-func (l testslice) Less(i, j int) bool { return l[i][1] < l[j][1] }
+func (l testslice) Less(i, j int) bool { return l[i][1] < l[j][1] } //比较第二位数
 
 func main() {
 
