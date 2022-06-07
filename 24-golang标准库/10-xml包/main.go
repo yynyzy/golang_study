@@ -20,5 +20,5 @@ func main() {
 	}
 	//b,_ := xml.Marshal(person)
 	b, _ := xml.MarshalIndent(person, " ", " ")
-	fmt.Printf("b: %v\n", string(b))
+	fmt.Printf("%v\n", string(b))
 }
