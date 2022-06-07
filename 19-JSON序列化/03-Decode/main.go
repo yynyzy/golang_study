@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+//从输出流解析
 func test6() {
 	f, _ := os.Open("go_study\\19-JSON序列化\\03-Decode\\a.json")
 	defer f.Close()
