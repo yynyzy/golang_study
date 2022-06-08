@@ -42,5 +42,7 @@ func main() {
 	// test()
 	// test2()
 	a := rand.Int()
+	b := rand.Intn(100)
 	fmt.Printf("rand.Int:%d\n", a)
+	fmt.Printf("rand.Int:%d\n", b)
 }
