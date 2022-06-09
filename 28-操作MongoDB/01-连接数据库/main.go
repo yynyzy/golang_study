@@ -15,10 +15,10 @@ func initDB() {
 	// 设置客户端连接配置
 	connect := options.Client().ApplyURI("mongodb://localhost:27017")
 	// 连接到MongoDB
-	var err error
-	c, err2 := mongo.Connect(context.TODO(), connect)
-	if err2 != nil {
-		log.Fatal(err2)
+
+	c, err := mongo.Connect(context.TODO(), connect)
+	if err != nil {
+		log.Fatal(err)
 	}
 	// 检查连接
 	err3 := c.Ping(context.TODO(), nil)
@@ -26,6 +26,7 @@ func initDB() {
 		log.Fatal(err3)
 	}
 	fmt.Println("mongodb connected")
+	client = c
 }
 
 func main() {
