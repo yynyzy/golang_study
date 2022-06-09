@@ -9,6 +9,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+/*
+下载驱动https://pkg.go.dev/go.mongodb.org/mongo-driver
+go get go.mongodb.org/mongo-driver/mongo
+*/
+
 var client *mongo.Client
 
 func initDB() {
