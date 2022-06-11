@@ -18,6 +18,19 @@ go get -u gorm.io/driver/mysql
 go get -u gorm.io/gorm
 */
 
+/*
+GORM定义一个 gorm.Model结构体，其包括字段ID、createdAt、UpdatedAt 、DeletedAt
+ll gorm.Model的定义
+````
+type Model struct {
+ID       uintl 'gorm:"primaryKey"
+CreatedAt time.Time
+UpdatedAt time.Time
+DeletedAt gorm.DeletedAt 'gorm:"index"
+````
+您可以将它嵌入到您的结构体中，以包含这几个字段，详情请参考嵌入结构体
+
+*/
 type Product struct {
 	gorm.Model
 	Code  string
