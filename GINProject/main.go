@@ -8,5 +8,8 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		c.String(200, "值:%v", "你好GIN")
 	})
+	r.GET("/news", func(c *gin.Context) {
+		c.String(200, "你好Yzy")
+	})
 	r.Run() // 监听并在 0.0.0.0:8080 上启动服务
 }
